@@ -1,0 +1,3 @@
+extends RichTextLabel
+
+class_name BVN_RichTextLabel

@@ -1,0 +1,160 @@
+[gd_scene load_steps=4 format=3 uid="uid://cu34hnq8h8f2k"]
+
+[ext_resource type="Theme" uid="uid://d1n8i32whs4up" path="res://addons/bvn-script/theme/bvn_default_theme.tres" id="1_tkl53"]
+[ext_resource type="Texture2D" uid="uid://dtw05s70kfp0q" path="res://assets/chat-gpt-boy.png" id="2_644r6"]
+[ext_resource type="Script" uid="uid://cxm62c5eujo4c" path="res://addons/bvn-script/nodes/control/save-load/bvn_save_load_modal.gd" id="2_jxovp"]
+
+[node name="Bvn SaveLoad Modal" type="PanelContainer"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.052951388
+anchor_top = 0.1404321
+anchor_right = 0.9470486
+anchor_bottom = 0.8595679
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tkl53")
+script = ExtResource("2_jxovp")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_top = 12
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BVN SaveLoad Slot1" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Details" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1"]
+self_modulate = Color(0.4045111, 0.40451115, 0.4045111, 1)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1/Details"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1/Details/MarginContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1/Details/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("2_644r6")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1/Details/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slot 1"
+
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1"]
+layout_mode = 2
+
+[node name="Load" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="Save" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot1/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="BVN SaveLoad Slot2" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Details" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2"]
+self_modulate = Color(0.4045111, 0.40451115, 0.4045111, 1)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2/Details"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2/Details/MarginContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2/Details/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("2_644r6")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2/Details/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slot 1"
+
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2"]
+layout_mode = 2
+
+[node name="Load" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="Save" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot2/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="BVN SaveLoad Slot3" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Details" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3"]
+self_modulate = Color(0.4045111, 0.40451115, 0.4045111, 1)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3/Details"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3/Details/MarginContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3/Details/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("2_644r6")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3/Details/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slot 1"
+
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3"]
+layout_mode = 2
+
+[node name="Load" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Load"
+
+[node name="Save" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/BVN SaveLoad Slot3/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Save"
