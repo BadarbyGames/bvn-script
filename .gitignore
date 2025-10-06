@@ -1,0 +1,7 @@
+*.afdesign~lock~
+*.tmp
+*.TMP
+
+# Godot 4+ specific ignores
+.godot/
+/android/
