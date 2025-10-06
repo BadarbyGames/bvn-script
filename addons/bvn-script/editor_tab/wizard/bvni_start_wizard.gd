@@ -45,11 +45,14 @@ func _on_select_dir_dialogue_canceled() -> void:
 
 
 func _generate_template() -> void:
+	ensure_dir(BVN_Settings.setup_data_folder)
+	ensure_dir(BVN_Settings.setup_audio_folder)
+	
+	
 	var vn_resource:BVN_VisualNovel = generate_vn_resource()
 	var vn_engine:PackedScene = generate_vn_main_scene(vn_resource)
 	
 	EditorInterface.open_scene_from_path(vn_engine.resource_path)
-	
 	diag_inform.title = "File Generated"
 	diag_inform.dialog_text = \
 	"""\
@@ -57,16 +60,20 @@ func _generate_template() -> void:
 	New Scene created at '%s'
 	"""  %  [vn_resource.resource_path, vn_engine.resource_path]
 	diag_inform.dialog_text = diag_inform.dialog_text.strip_edges()
+	diag_inform.confirmed.connect(func ():
+		var editor_fs := EditorInterface.get_resource_filesystem()
+		if editor_fs:
+			editor_fs.scan_sources()
+		, CONNECT_ONE_SHOT)
 	diag_inform.show()
+	
+	
 	
 func generate_vn_resource() -> BVN_VisualNovel:
 	var data_path :String = BVN_Settings.setup_data_folder
 	var novel := BVN_VisualNovel.new()
-	var proj_name:String = ProjectSettings.get_setting("application/config/name")
-	var strings = ["novel"]
-	if proj_name: strings.push_back(proj_name)
-	
-	var file_name:String = "-".join(strings)
+
+	var file_name:String = "bvn_main_novel"
 	var file_path:String = "%s/%s.tres" % [data_path,file_name]
 	
 	var err = ResourceSaver.save(novel,file_path)
@@ -76,7 +83,7 @@ func generate_vn_resource() -> BVN_VisualNovel:
 
 func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	var data_path :String = BVN_Settings.setup_data_folder
-	var file_name = "bvni_novel_template"
+	var file_name:String = "bvn_main_scene"
 	var file_path:String = "%s/%s.tscn" % [data_path,file_name]
 	
 	var root_node:Node = novel_template_packed_scene.instantiate()
@@ -89,4 +96,15 @@ func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	ResourceSaver.save(new_packed, file_path)
 	new_packed.take_over_path(file_path)
 	return new_packed
-		
+	
+func ensure_dir(path: String) -> void:	
+	var dir := DirAccess.open("res://")
+	if dir:
+		var parts := path.trim_prefix("res://").split("/")
+		var current := "res://"
+		for part in parts:
+			if part == "":
+				continue
+			current += part + "/"
+			if not DirAccess.dir_exists_absolute(current):
+				DirAccess.make_dir_absolute(current)

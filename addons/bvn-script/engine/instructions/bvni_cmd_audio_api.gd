@@ -4,6 +4,7 @@ class_name BVNInternal_CmdAudioApi
 
 func play(path:String, is_editor_mode:bool = Engine.is_editor_hint()) -> AudioStreamPlayer:
 	var response := BVNInternal.find_resource(path, "AudioStream")
+	print("@@response ", error_string(response[0]))
 	if response[0] == OK:
 		var audio: AudioStream = response[1]
 		

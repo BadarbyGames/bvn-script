@@ -1,0 +1,88 @@
+[gd_scene load_steps=12 format=3 uid="uid://dht23rfsaeuau"]
+
+[ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_c0qhj"]
+[ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="2_u6wfx"]
+[ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="3_q8q11"]
+[ext_resource type="Script" uid="uid://dvmygi75fskfb" path="res://addons/bvn-script/engine/bvn_engine.gd" id="4_gnu8n"]
+[ext_resource type="Resource" uid="uid://cv8h8jip63tak" path="res://data/bvn_main_novel.tres" id="5_c0qhj"]
+[ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="6_owpmc"]
+[ext_resource type="Script" uid="uid://db0ovr2hivbar" path="res://addons/bvn-script/engine/variables/bvn_var_number.gd" id="7_xmt3d"]
+[ext_resource type="Script" uid="uid://bn5m0x4p12ovy" path="res://addons/bvn-script/models/bvn_scene_set.gd" id="8_v7o2y"]
+[ext_resource type="Script" uid="uid://c60r2udmkdqps" path="res://addons/bvn-script/models/bvn_scene.gd" id="9_ag2y6"]
+[ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="10_oo72x"]
+
+[sub_resource type="Resource" id="Resource_3v2nj"]
+script = ExtResource("10_oo72x")
+
+[node name="BVN Novel Template" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BVN_LoadButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -478.0
+offset_top = -97.0
+offset_right = -268.0
+offset_bottom = -29.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Load Session"
+script = ExtResource("1_c0qhj")
+metadata/_custom_type_script = "uid://66bfvkefkbhb"
+
+[node name="INTERNAL BVN_ButtonLoadSessionVM" type="Node" parent="CanvasLayer/BVN_LoadButton" node_paths=PackedStringArray("target_node")]
+script = ExtResource("2_u6wfx")
+target_node = NodePath("..")
+
+[node name="Start Game" type="Button" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -241.0
+offset_top = -98.0
+offset_right = -30.419434
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Start Game"
+
+[node name="Mini Games" type="Node" parent="."]
+script = ExtResource("3_q8q11")
+
+[node name="Tetris" type="Node2D" parent="Mini Games"]
+visible = false
+
+[node name="BVN_Engine" type="Node2D" parent="."]
+script = ExtResource("4_gnu8n")
+visual_novel = ExtResource("5_c0qhj")
+autoplay = false
+metadata/_custom_type_script = "uid://dvmygi75fskfb"
+
+[node name="Variables" type="Node2D" parent="BVN_Engine"]
+script = ExtResource("6_owpmc")
+metadata/_custom_type_script = "uid://bwajhb5p1f2b"
+
+[node name="money" type="Node" parent="BVN_Engine/Variables"]
+script = ExtResource("7_xmt3d")
+value = 200.0
+metadata/_custom_type_script = "uid://db0ovr2hivbar"
+
+[node name="Story Structure" type="Node2D" parent="BVN_Engine"]
+script = ExtResource("8_v7o2y")
+metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
+
+[node name="Chapters" type="Node2D" parent="BVN_Engine/Story Structure"]
+script = ExtResource("8_v7o2y")
+metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
+
+[node name="BVN_Scene" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
+visible = false
+script = ExtResource("9_ag2y6")
+scene_data = SubResource("Resource_3v2nj")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"

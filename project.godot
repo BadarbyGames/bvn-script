@@ -15,6 +15,7 @@ setup/audio_folder="res://assets"
 dialogue/text_speed=55
 debug/add_child_mode=1
 debug/hotspots_visible=false
+debug/last_edited_engine="res://data/bvn_main_scene.tscn"
 
 [application]
 
