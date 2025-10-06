@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2ijcg4oyojho"]
+
+[ext_resource type="Script" uid="uid://bkx76xde6gad6" path="res://addons/bvn-script/editor_tab/bvn_editor_tab.gd" id="1_bvist"]
+[ext_resource type="Theme" uid="uid://d1n8i32whs4up" path="res://addons/bvn-script/theme/bvn_default_theme.tres" id="1_n3g2n"]
+[ext_resource type="PackedScene" uid="uid://do7wh0ql8aqc7" path="res://addons/bvn-script/editor_tab/wizard/bvni_start_wizard.tscn" id="2_qxi6u"]
+[ext_resource type="Script" uid="uid://bwi3jxomcmju3" path="res://addons/bvn-script/editor_tab/bvni_editor_audio.gd" id="3_cy1eb"]
+[ext_resource type="Script" uid="uid://dbo11xrhjmqen" path="res://addons/bvn-script/editor_tab/bvni_editor_text_editor.gd" id="3_vsh74"]
+[ext_resource type="Script" uid="uid://c0dccj5sig8bo" path="res://addons/bvn-script/editor_tab/bvni_editor_hotspots.gd" id="4_lq22p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bvist"]
+font_size = 20
+
+[node name="BVN Editor Tab" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_n3g2n")
+script = ExtResource("1_bvist")
+
+[node name="BVNI Editor Audio" type="Node" parent="."]
+script = ExtResource("3_cy1eb")
+
+[node name="BVNI Editor Hotspots" type="Node" parent="."]
+script = ExtResource("4_lq22p")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Script Editor" type="HBoxContainer" parent="TabContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBox" type="VBoxContainer" parent="TabContainer/Script Editor"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title Container" type="HBoxContainer" parent="TabContainer/Script Editor/VBox"]
+layout_mode = 2
+
+[node name="SceneName" type="Label" parent="TabContainer/Script Editor/VBox/Title Container"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Story Structure / Chapter 1 / Scene 1"
+label_settings = SubResource("LabelSettings_bvist")
+
+[node name="AudioPlayerContainer" type="HBoxContainer" parent="TabContainer/Script Editor/VBox/Title Container"]
+layout_mode = 2
+
+[node name="Hide HotSpots" type="Button" parent="TabContainer/Script Editor/VBox/Title Container/AudioPlayerContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "👆 hide hotspots"
+
+[node name="Stop_Audio_Btn" type="Button" parent="TabContainer/Script Editor/VBox/Title Container/AudioPlayerContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Stop Playing Audio"
+
+[node name="CodeEditor" type="CodeEdit" parent="TabContainer/Script Editor/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+gutters_draw_breakpoints_gutter = true
+gutters_draw_executing_lines = true
+gutters_draw_line_numbers = true
+script = ExtResource("3_vsh74")
+metadata/_custom_type_script = "uid://dbo11xrhjmqen"
+
+[node name="Configuration Wizard" parent="TabContainer" instance=ExtResource("2_qxi6u")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
