@@ -8,8 +8,25 @@
 
 config_version=5
 
+[BVN]
+
+setup/data_folder="res://data"
+setup/audio_folder="res://assets"
+dialogue/text_speed=55
+debug/add_child_mode=1
+debug/hotspots_visible=false
+
 [application]
 
 config/name="bvn-script-development"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+BVN="*res://addons/bvn-script/bvn.gd"
+BVN_EventBus="*res://addons/bvn-script/events/BVN_EventBus.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/bvn-script/plugin.cfg", "res://addons/gut/plugin.cfg")
