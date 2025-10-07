@@ -11,8 +11,10 @@ var time_to_live:float
 func _enter_tree() -> void:
 	set_process(false)
 
-func _ready() -> void:
+func run_as_timed_badge(ttl:float):
 	progress.max_value = time_to_live
+	set_process(true)
+	
 
 var progress_factor:int = 1
 func _process(delta: float) -> void:

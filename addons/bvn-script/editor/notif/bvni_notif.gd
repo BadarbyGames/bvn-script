@@ -38,7 +38,7 @@ static func toast(text:String):
 	container.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 	container.position -= Vector2(20,20)
 	
-	badge.set_process(true)
+	badge.run_as_timed_badge(7)
 
 	
 	
