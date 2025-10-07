@@ -54,6 +54,7 @@ func find_by_scene_path(scene_path:String):
 var scene_history:Array[Node] = []
 func toggle_scene(scene_or_node:Node):
 	var visited := {}
+	var hidden_node_names :Array[String]
 	for scene_source in [scenes,scene_history]:
 		for other_scene in scene_source:
 			if visited.has(other_scene): continue
@@ -64,6 +65,13 @@ func toggle_scene(scene_or_node:Node):
 				other_scene.set_process(is_visible)
 				other_scene.set_physics_process(is_visible)
 				other_scene.visible = is_visible
+				if !is_visible:
+					hidden_node_names.append(other_scene.name)
+
+	if Engine.is_editor_hint(): # Don't fire if editor is just loading	
+		BVNInternal_Notif.toast("'%s' activated" % scene_or_node.name)
+		if hidden_node_names:
+			BVNInternal_Notif.toast("'%s' is hidden" % ",".join(hidden_node_names))
 
 func push_scene(scene_or_node:Node):
 	scene_history.append(scene_or_node)

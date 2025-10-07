@@ -21,7 +21,8 @@ func _enter_tree():
 	
 	for path in [
 		"/editor/bvn_editor_engine.gd",
-		"/editor/bvn_project_vars.gd"
+		"/editor/bvn_project_vars.gd",
+		"/editor/notif/bvni_notif.gd",
 	]:
 		var script_path = load(plugin_dir + path)
 		var controller = script_path.new(self)

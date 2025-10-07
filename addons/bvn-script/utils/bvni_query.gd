@@ -18,3 +18,6 @@ static var hotspots:Array[BVN_GuiActionHotspot]:
 		var ary:Array[BVN_GuiActionHotspot] 
 		ary.assign(tmp)
 		return ary
+
+static var editor_notif:
+	get: return tree.get_first_node_in_group(BVNInternal_Tags.EDITOR_NOTIF)
