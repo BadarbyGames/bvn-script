@@ -43,11 +43,12 @@ func _on_select_dir_dialogue_dir_selected(dir: String) -> void:
 func _on_select_dir_dialogue_canceled() -> void:
 	get_viewport().gui_release_focus()
 
-
 func _generate_template() -> void:
-	ensure_dir(BVN_Settings.setup_data_folder)
-	ensure_dir(BVN_Settings.setup_audio_folder)
+	var plugin_folder := BVNInternal.get_plugin_path()
+	var assets_folder := str(plugin_folder, "/editor_tab/wizard/template_assets/")
 	
+	ensure_dir(BVN_Settings.setup_data_folder)
+	copy_folder(assets_folder, BVN_Settings.setup_audio_folder)
 	
 	var vn_resource:BVN_VisualNovel = generate_vn_resource()
 	var vn_engine:PackedScene = generate_vn_main_scene(vn_resource)
@@ -63,10 +64,10 @@ func _generate_template() -> void:
 	diag_inform.confirmed.connect(func ():
 		var editor_fs := EditorInterface.get_resource_filesystem()
 		if editor_fs:
-			editor_fs.scan_sources()
+			#editor_fs.scan_sources()
+			editor_fs.scan()
 		, CONNECT_ONE_SHOT)
 	diag_inform.show()
-	
 	
 	
 func generate_vn_resource() -> BVN_VisualNovel:
@@ -87,6 +88,7 @@ func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	var file_path:String = "%s/%s.tscn" % [data_path,file_name]
 	
 	var root_node:Node = novel_template_packed_scene.instantiate()
+	root_node.name = "BVNI Root Node"
 	var bvn_engine:BVN_Engine = BdbSelect.child_by_type_recursive(root_node, BVN_Engine)
 	bvn_engine.visual_novel = vn_resource
 	
@@ -108,3 +110,46 @@ func ensure_dir(path: String) -> void:
 			current += part + "/"
 			if not DirAccess.dir_exists_absolute(current):
 				DirAccess.make_dir_absolute(current)
+				
+
+func copy_folder(src_path: String, dst_path: String) -> void:
+	var src_dir := DirAccess.open(src_path)
+	if src_dir == null:
+		push_error("Failed to open source folder: %s" % src_path)
+		return
+
+	# Ensure destination folder exists
+	DirAccess.make_dir_recursive_absolute(dst_path)
+
+	src_dir.list_dir_begin()
+	var file_name := src_dir.get_next()
+	while file_name != "":
+		if file_name.begins_with("."):  # skip hidden system entries
+			file_name = src_dir.get_next()
+			continue
+
+		var src_item_path := src_path.path_join(file_name)
+		var dst_item_path := dst_path.path_join(file_name)
+
+		if src_dir.current_is_dir():
+			# Recursive copy for directories
+			copy_folder(src_item_path, dst_item_path)
+		else:
+			# Copy file contents
+			var src_file := FileAccess.open(src_item_path, FileAccess.READ)
+			if src_file:
+				var data := src_file.get_buffer(src_file.get_length())
+				src_file.close()
+
+				var dst_file := FileAccess.open(dst_item_path, FileAccess.WRITE)
+				if dst_file:
+					dst_file.store_buffer(data)
+					dst_file.close()
+				else:
+					push_error("Failed to create file: %s" % dst_item_path)
+			else:
+				push_error("Failed to open file: %s" % src_item_path)
+
+		file_name = src_dir.get_next()
+
+	src_dir.list_dir_end()

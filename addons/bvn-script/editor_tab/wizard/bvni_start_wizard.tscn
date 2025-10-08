@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://mnsuuuymgf2h" path="res://addons/bvn-script/editor_tab/wizard/bvni_start_wizard.gd" id="1_y62uk"]
 [ext_resource type="Theme" uid="uid://d1n8i32whs4up" path="res://addons/bvn-script/theme/bvn_default_theme.tres" id="2_u87tp"]
 [ext_resource type="LabelSettings" uid="uid://bhce2x2yvspmq" path="res://addons/bvn-script/editor_tab/wizard/bvni_h1.tres" id="3_65m8m"]
-[ext_resource type="PackedScene" uid="uid://dqkdhqy74804t" path="res://addons/bvn-script/editor_tab/wizard/bvni_novel_template.tscn" id="3_y62uk"]
+[ext_resource type="PackedScene" uid="uid://dqkdhqy74804t" path="res://addons/bvn-script/editor_tab/wizard/template/bvni_novel_template.tscn" id="3_y62uk"]
 [ext_resource type="LabelSettings" uid="uid://ck1dd5so5sce1" path="res://addons/bvn-script/editor_tab/wizard/bvni_h2.tres" id="4_2i3qq"]
 
 [node name="BvniStartWizard" type="PanelContainer" node_paths=PackedStringArray("diag_select_dir", "diag_inform", "data_line_edit", "audio_line_edit", "descrpt_label")]
@@ -22,6 +22,7 @@ data_line_edit = NodePath("MarginContainer/ScrollContainer/HBoxContainer/VBoxCon
 audio_line_edit = NodePath("MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/Assets/LineEdit2")
 novel_template_packed_scene = ExtResource("3_y62uk")
 descrpt_label = NodePath("MarginContainer/ScrollContainer/HBoxContainer/Description")
+template_dir = "res://addons/bvn-script/editor_tab/wizard/template_assets"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 oversampling_override = 1.0

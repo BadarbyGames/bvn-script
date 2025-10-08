@@ -64,7 +64,6 @@ func setup() -> void:
 	var is_old_project := BVN_Settings.last_edited_engine and \
 		FileAccess.file_exists(BVN_Settings.last_edited_engine)
 	start_wizard.visible = !is_old_project
-	
 
 	BVN_EventBus.on_editor_attached.emit()
 	
