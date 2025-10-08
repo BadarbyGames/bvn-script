@@ -33,6 +33,7 @@ var parsed_ast:Bvn_AstNode:
 # _ready even while viewing it as prefab instead of an actual tool
 var is_attached_to_editor = false
 func setup() -> void:
+	print(":@@ SETUOP?")
 	is_attached_to_editor = true # assumption made that SETUP is only called when its in the editor
 	
 	timer = Timer.new()

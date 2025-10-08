@@ -12,6 +12,7 @@
 
 [sub_resource type="Resource" id="Resource_3v2nj"]
 script = ExtResource("10_oo72x")
+scene_script = "> audio.play(\"guitar.wav\")"
 
 [node name="BVN Novel Template" type="Node2D"]
 
@@ -51,6 +52,7 @@ text = "Start Game"
 script = ExtResource("3_q8q11")
 
 [node name="Tetris" type="Node2D" parent="Mini Games"]
+visible = false
 
 [node name="BVN_Engine" type="Node2D" parent="." node_paths=PackedStringArray("managed_canvas")]
 script = ExtResource("4_gnu8n")
@@ -77,7 +79,6 @@ script = ExtResource("8_v7o2y")
 metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 
 [node name="BVN_Scene" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
-visible = false
 script = ExtResource("9_ag2y6")
 scene_data = SubResource("Resource_3v2nj")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"

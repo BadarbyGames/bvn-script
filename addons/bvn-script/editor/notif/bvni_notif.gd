@@ -21,24 +21,51 @@ func start():
 static func get_viewport_parent() -> Control:
 	## @TODO add a check for differnt version, no gaurantee this wont change by the next version
 	return EditorInterface.get_editor_viewport_2d().get_parent().get_parent()
-	
-static func toast(text:String):
-	var resource_path := (BVNInternal_NotifBadge as Script).resource_path
-	var tscn_name := resource_path.get_file().get_basename()
-	var tscn_dir := (BVNInternal_NotifBadge as Script).resource_path.get_base_dir()
-	var packed:PackedScene = load(str(tscn_dir,"/",tscn_name,".tscn"))
 
-	var container:BVNInternal_Notif = BVNInternal_Query.editor_notif
+
+static var container:Node: 
+	get: return BVNInternal_Query.editor_notif
 	
-	var badge:BVNInternal_NotifBadge = packed.instantiate()
-	badge.time_to_live = 5.5
-	
+static func toast(text:String, config:Dictionary = {}) -> BVNInternal_NotifBadge:
+	var icon:Texture2D = config.get("icon",null)
+	var packed_scene := get_toast_packed_scene(BVNInternal_NotifBadge)
+	var badge:BVNInternal_NotifBadge = packed_scene.instantiate()
 	container.add_child(badge)
+	
 	badge.button.text = text
+	if icon:
+		badge.button.icon = icon
+		
 	container.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
 	container.position -= Vector2(20,20)
 	
-	badge.run_as_timed_badge(7)
+	var ttl:float = config.get("time_to_live",5.5)
+	badge.start(ttl)
+	return badge
+
+static func toast_audio(text:String, config:Dictionary = {}) -> BVNInternal_NotifBadgeAudio:
+	var icon:Texture2D = config.get("icon",null)
+	var packed_scene := get_toast_packed_scene(BVNInternal_NotifBadgeAudio)
+	var badge:BVNInternal_NotifBadgeAudio = packed_scene.instantiate()
+	container.add_child(badge)
+	
+	badge.button.text = text
+	if icon:
+		badge.button.icon = icon
+		
+	container.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	container.position -= Vector2(20,20)
+	
+	badge.start(config.audio_player)
+	return badge
+
+
+static func get_toast_packed_scene(script:Script) -> PackedScene:
+	var resource_path := script.resource_path
+	var tscn_name := resource_path.get_file().get_basename()
+	var tscn_dir := script.resource_path.get_base_dir()
+	
+	return load(str(tscn_dir,"/",tscn_name,".tscn"))
 
 	
 	

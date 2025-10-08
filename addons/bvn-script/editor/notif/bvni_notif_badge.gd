@@ -6,22 +6,23 @@ class_name BVNInternal_NotifBadge
 @onready var button:Button = $Button
 @onready var progress:ProgressBar = $Button/ProgressBar
 
-var time_to_live:float
+var time_to_live:float:
+	set(v):
+		progress.max_value = v
 
 func _enter_tree() -> void:
-	set_process(false)
+	process_mode = Node.PROCESS_MODE_DISABLED
 
-func run_as_timed_badge(ttl:float):
-	progress.max_value = time_to_live
-	set_process(true)
-	
+func start(ttl:float):
+	progress.max_value = ttl
+	progress_factor = 1
+	process_mode = Node.PROCESS_MODE_INHERIT
 
-var progress_factor:int = 1
+var progress_factor:int = 0
 func _process(delta: float) -> void:
 	progress.value += delta * progress_factor
 	if progress.value >= progress.max_value:
 		queue_free()
-
 
 func _on_button_mouse_entered() -> void:
 	progress_factor = 0

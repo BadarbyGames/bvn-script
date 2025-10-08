@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0n0wroqm5ybm"]
+[gd_scene load_steps=2 format=3 uid="uid://dv8yo23yycumr"]
 
 [ext_resource type="Script" uid="uid://dro15se7wwlq" path="res://addons/bvn-script/editor/notif/bvni_notif_badge.gd" id="1_bywxv"]
 
 [node name="BvniNotifBadge" type="HBoxContainer"]
+process_mode = 4
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

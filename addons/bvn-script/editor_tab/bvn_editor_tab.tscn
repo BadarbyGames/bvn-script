@@ -63,12 +63,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "👆 hide hotspots"
 
-[node name="Stop_Audio_Btn" type="Button" parent="TabContainer/Script Editor/VBox/Title Container/AudioPlayerContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Stop Playing Audio"
-
 [node name="CodeEditor" type="CodeEdit" parent="TabContainer/Script Editor/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
