@@ -17,20 +17,20 @@ func test_plays_audio_in_game():
 	assert_true(player.playing)
 	assert_eq(player.stream.resource_path.get_file(), "test_audio.ogg")
 	
-func test_audio_editor_starts_clean():
+func test_send_notif_in_game_editor_mode():
 	var editor:BVN_EditorTab = add_child_autoqfree(packed_scene.instantiate())
 	editor.setup()
 	
-	var manager := BVNInternal_Query.editor_audio
-	assert_false(manager.btn_stop_audio.visible) # ensure it starts hidden
-	
-func test_plays_audio_in_game_editor_mode():
-	var editor:BVN_EditorTab = add_child_autoqfree(packed_scene.instantiate())
-	editor.setup()
-	
-	var manager := BVNInternal_Query.editor_audio
+	var manager:BVNInternal_Notif = BVNInternal_Query.editor_notif 
 	var player := api.play("test_audio.ogg", true)
 	
-	assert_true(player in manager.playing_audios)
-	assert_true(manager.btn_stop_audio.visible)
-	assert_true(manager.btn_stop_audio.text.contains("test_audio.ogg"))
+	var badge = manager.container.get_child(0) as BVNInternal_NotifBadgeAudio
+	assert_not_null(badge)
+	
+	# Simulate pressing (deleting event)
+	badge.button.pressed.emit()
+	await wait_idle_frames(10) # Wait for all queue free()
+	assert_eq(manager.container.get_children().size(), 0)
+	assert_false(is_instance_valid(player))
+	
+	assert_true(true)

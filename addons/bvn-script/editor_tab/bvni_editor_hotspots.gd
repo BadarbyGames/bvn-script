@@ -4,12 +4,10 @@ extends Node
 @onready var hotspot_button:Button = %"Hide HotSpots"
 
 func _enter_tree() -> void:
-	print("@@HOTSPOT NODE _enter_tree")
 	add_to_group(BVNInternal_Tags.EDITOR_AUDIO)
 	BVN_EventBus.on_editor_attached.connect(setup)
 	
 func _exit_tree() -> void:
-	print("@@HOTSPOT NODE _exit_tree")
 	remove_from_group(BVNInternal_Tags.EDITOR_AUDIO)
 	BVN_EventBus.on_editor_attached.disconnect(setup)
 	

@@ -23,7 +23,7 @@ func _on_audio_play(player:AudioStreamPlayer):
 	var audio_name := audio_path.get_file()
 	
 	# Notify
-	var icon_path:String = BVN_IconDirectory.get_icon_dir() + "/gear.svg"
+	var icon_path:String = BVN_IconDirectory.get_icon_dir() + "/stop.svg"
 	var icon:Texture2D = ResourceLoader.load(icon_path)
 	var badge := BVNInternal_Notif.toast_audio("Playing %s " % audio_name , {"icon": icon, "audio_player": player})
 	badge.button.pressed.connect(func ():

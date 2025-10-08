@@ -4,11 +4,13 @@ extends VBoxContainer
 class_name BVNInternal_Notif
 
 var plugin:EditorPlugin
-func _init(_plugin:EditorPlugin) -> void:
+func _init(_plugin:EditorPlugin = null) -> void:
 	plugin = _plugin
+
+func _enter_tree() -> void:
+	add_to_group(BVNInternal_Tags.EDITOR_NOTIF)
 	
 func start():
-	add_to_group(BVNInternal_Tags.EDITOR_NOTIF)
 	
 	var main := get_viewport_parent()
 	main.add_child(self)

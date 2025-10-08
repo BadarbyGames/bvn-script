@@ -16,7 +16,10 @@ func start(new_player:AudioStreamPlayer):
 	process_mode = Node.PROCESS_MODE_INHERIT
 	
 func _process(delta: float) -> void:
-	progress.value = player.get_playback_position()
+	if is_instance_valid(player):
+		progress.value = player.get_playback_position()
+	else:
+		queue_free()
 
 func _on_button_pressed() -> void:
 	progress.value = progress.max_value

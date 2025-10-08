@@ -22,7 +22,6 @@ static func parse(text: String) -> Dictionary:
 			})
 
 		var tag_text = m.get_string()
-		print("@@tag_text ",tag_text)
 
 		if tag_text.begins_with("[/"):  
 			# 2. Closing tag → pop stack if matching exists
