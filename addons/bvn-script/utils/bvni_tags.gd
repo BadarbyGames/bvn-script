@@ -4,6 +4,7 @@ class_name BVNInternal_Tags
 
 const ENGINE = &".bvn.engine"
 const ENGINE_VARS = &".bvn.engine.variables"
+const ENGINE_SESSION = &".bvn.engine.session"
 const SCENE = &".bvn.scene"
 const SCENE_PAGE = &".bvn.scene.page"
 const EDITOR_AUDIO = &".bvn.editor.audio"

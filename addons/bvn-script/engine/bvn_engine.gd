@@ -36,7 +36,7 @@ var cmd_runner:BVNInternal_EngineCommandRunner
 var speaker_runner:BVNInternal_SpeakerRunner
 
 var gui_orchestrator:BvnInternal_GuiOrchestrator 
-var save_service:BVNInternal_SessionService 
+var session_service:BVNInternal_SessionService 
 var scene_service:BVNInernal_SceneService
 var lock_service:BVNInternal_LockService
 #endregion
@@ -78,9 +78,9 @@ func _init() -> void:
 		#endregion
 		
 		#region SERVICES
-		if save_service == null:
-			save_service = BVNInternal_SessionService.new()
-			service_node.add_child(save_service, true,Node.INTERNAL_MODE_BACK)
+		if session_service == null:
+			session_service = BVNInternal_SessionService.new()
+			service_node.add_child(session_service, true,Node.INTERNAL_MODE_BACK)
 		if scene_service == null:
 			scene_service = BVNInernal_SceneService.new()
 			service_node.add_child(scene_service, true,Node.INTERNAL_MODE_BACK)

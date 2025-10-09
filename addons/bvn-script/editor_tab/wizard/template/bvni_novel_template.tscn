@@ -4,8 +4,8 @@
 [ext_resource type="Theme" uid="uid://b8cbfmp0jnll0" path="res://addons/bvn-script/editor_tab/wizard/template_assets/main-menu-theme.tres" id="1_fybqi"]
 [ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="1_oxtqp"]
 [ext_resource type="Script" uid="uid://dvmygi75fskfb" path="res://addons/bvn-script/engine/bvn_engine.gd" id="2_4htiu"]
-[ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="2_x3un8"]
 [ext_resource type="Script" uid="uid://db0ovr2hivbar" path="res://addons/bvn-script/engine/variables/bvn_var_number.gd" id="3_5v76j"]
+[ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="3_fybqi"]
 [ext_resource type="AudioStream" uid="uid://d3o2qioecjpay" path="res://addons/bvn-script/editor_tab/wizard/template_assets/menu.ogg" id="3_mschf"]
 [ext_resource type="Script" uid="uid://bn5m0x4p12ovy" path="res://addons/bvn-script/models/bvn_scene_set.gd" id="3_nvh8d"]
 [ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="3_x3un8"]
@@ -54,12 +54,13 @@ offset_bottom = -149.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_fybqi")
-text = "Load Session"
+disabled = true
+text = "Load Game"
 script = ExtResource("1_3v2nj")
 metadata/_custom_type_script = "uid://66bfvkefkbhb"
 
 [node name="INTERNAL BVN_ButtonLoadSessionVM" type="Node" parent="CanvasLayer/BVN_LoadButton" node_paths=PackedStringArray("target_node")]
-script = ExtResource("2_x3un8")
+script = ExtResource("3_fybqi")
 target_node = NodePath("..")
 
 [node name="Start Demo" type="Button" parent="CanvasLayer"]

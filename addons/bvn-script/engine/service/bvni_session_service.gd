@@ -7,10 +7,12 @@ var session_data:Dictionary = {
 }
 
 func _enter_tree() -> void:
+	add_to_group(BVNInternal_Tags.ENGINE_SESSION)
 	BVN_EventBus.on_request_save_session.connect(cb_save_game)
 	BVN_EventBus.on_request_load_session.connect(cb_load_game)
 	
 func _exit_tree() -> void:
+	remove_from_group(BVNInternal_Tags.ENGINE_SESSION)
 	BVN_EventBus.on_request_save_session.disconnect(cb_save_game)
 	BVN_EventBus.on_request_load_session.disconnect(cb_load_game)
 	
@@ -40,6 +42,11 @@ func save_game(file_name:String, save_data = {}) -> Dictionary:
 	save_file.store_line(json_string)
 	print("Saved game at %s " % file_path)
 	return save_data
+	
+func has_save_game(file_name:String = session_data.get(&"file_name","")) -> bool:
+	var file_path := "user://save/%s.save" % file_name
+	var save_data:Dictionary
+	return FileAccess.file_exists(file_path)
 
 # Note: This can be called from anywhere inside the tree. This function
 # is path independent.
