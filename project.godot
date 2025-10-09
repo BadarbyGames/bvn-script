@@ -13,14 +13,14 @@ config_version=5
 setup/data_folder="res://data"
 setup/audio_folder="res://assets"
 dialogue/text_speed=55
-debug/add_child_mode=1
 debug/hotspots_visible=false
-debug/last_edited_engine="res://data/bvn_main_scene.tscn"
+debug/last_edited_engine="res://addons/bvn-script/editor_tab/wizard/template/bvni_novel_template.tscn"
+debug/add_child_mode=1
 
 [application]
 
 config/name="bvn-script-development"
-run/main_scene="uid://dht23rfsaeuau"
+run/main_scene="uid://dqkdhqy74804t"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -28,6 +28,10 @@ config/icon="res://icon.svg"
 
 BVN="*res://addons/bvn-script/bvn.gd"
 BVN_EventBus="*res://addons/bvn-script/events/BVN_EventBus.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ck6l75t8k1csh"
-path="res://.godot/imported/chat-gpt-girl.png-eb502f8f995e226241ffb944564ddcab.ctex"
+uid="uid://p78qcr50dcl0"
+path="res://.godot/imported/warning.svg-58beffcaedda32a32960fd1c712957ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/bvn-sources/images/chat-gpt-girl.png"
-dest_files=["res://.godot/imported/chat-gpt-girl.png-eb502f8f995e226241ffb944564ddcab.ctex"]
+source_file="res://addons/bvn-script/icons/warning.svg"
+dest_files=["res://.godot/imported/warning.svg-58beffcaedda32a32960fd1c712957ab.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

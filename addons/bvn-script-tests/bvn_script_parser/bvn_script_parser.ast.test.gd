@@ -7,14 +7,15 @@ func test_basic_linear_input():
 	var input:String = \
 """\
 spongebob: hi patrick
-patrick: hi spongebob\
+patrick: hi spongebob
+: this is the narrator\
 """
 	
 	var output := parser.parse_bvn_script(input)
 	
 	assert_eq(-1 , output.depth, "Root must start at -1 (special case)")
 	assert_eq(-1 , output.line_index, "Root must start at -1 (special case)")
-	assert_eq(2, output.children.size(), "2 statements, 2 children")
+	assert_eq(3, output.children.size(), "3 statements, 3 children")
 	
 	assert_eq("spongebob: hi patrick", output.children[0].text)
 	assert_eq(0, output.children[0].depth)
@@ -25,6 +26,11 @@ patrick: hi spongebob\
 	assert_eq(0, output.children[1].depth)
 	assert_eq(1, output.children[1].line_index)
 	assert_eq(output, output.children[1].parent)
+	
+	assert_eq(": this is the narrator", output.children[2].text)
+	assert_eq(0, output.children[2].depth)
+	assert_eq(2, output.children[2].line_index)
+	assert_eq(output, output.children[2].parent)
 	
 func test_nested():
 	var input:String = \

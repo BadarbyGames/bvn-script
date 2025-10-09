@@ -16,8 +16,8 @@ func _exit_tree() -> void:
 	
 func setup():
 	BVN_EventBus.on_editor_audio_play.connect(_on_audio_play)
+	BVN_EventBus.on_editor_audio_failed.connect(_on_audio_failed)
 
-var playing_audios:Array[AudioStreamPlayer]= []
 func _on_audio_play(player:AudioStreamPlayer):
 	var audio_path := player.stream.resource_path
 	var audio_name := audio_path.get_file()
@@ -29,3 +29,8 @@ func _on_audio_play(player:AudioStreamPlayer):
 	badge.button.pressed.connect(func ():
 		player.stop()
 		player.finished.emit(), CONNECT_ONE_SHOT)
+		
+func _on_audio_failed(stream_path:String):
+	var icon_path:String = BVN_IconDirectory.get_icon_dir() + "/warning.svg"
+	var icon:Texture2D = ResourceLoader.load(icon_path)
+	BVNInternal_Notif.toast("")

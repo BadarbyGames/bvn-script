@@ -29,5 +29,5 @@ func _init() -> void:
 		
 func _get_configuration_warnings() -> PackedStringArray:
 	if text:
-		return ["This field will be overwritten."]
+		return ["This field's text will be overwritten by the engine."]
 	return []

@@ -49,6 +49,7 @@ signal on_editor_variable_add(variable:BVN_Var)
 signal on_editor_variable_rm(variable:BVN_Var)
 signal on_editor_variable_rename(variable:BVN_Var, from:String, to:String)
 signal on_editor_audio_play(audio_stream_player:AudioStreamPlayer)
+signal on_editor_audio_failed(audio_stream_path:String)
 #endregion
 
 func debug_get_all_signals():

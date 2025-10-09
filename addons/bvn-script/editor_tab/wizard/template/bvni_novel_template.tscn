@@ -1,16 +1,27 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqkdhqy74804t"]
+[gd_scene load_steps=17 format=3 uid="uid://dqkdhqy74804t"]
 
 [ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_3v2nj"]
+[ext_resource type="Theme" uid="uid://b8cbfmp0jnll0" path="res://addons/bvn-script/editor_tab/wizard/template_assets/main-menu-theme.tres" id="1_fybqi"]
 [ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="1_oxtqp"]
 [ext_resource type="Script" uid="uid://dvmygi75fskfb" path="res://addons/bvn-script/engine/bvn_engine.gd" id="2_4htiu"]
 [ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="2_x3un8"]
 [ext_resource type="Script" uid="uid://db0ovr2hivbar" path="res://addons/bvn-script/engine/variables/bvn_var_number.gd" id="3_5v76j"]
+[ext_resource type="AudioStream" uid="uid://d3o2qioecjpay" path="res://addons/bvn-script/editor_tab/wizard/template_assets/menu.ogg" id="3_mschf"]
 [ext_resource type="Script" uid="uid://bn5m0x4p12ovy" path="res://addons/bvn-script/models/bvn_scene_set.gd" id="3_nvh8d"]
 [ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="3_x3un8"]
 [ext_resource type="Script" uid="uid://c60r2udmkdqps" path="res://addons/bvn-script/models/bvn_scene.gd" id="4_5v76j"]
 [ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="5_6a6jl"]
 [ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
+[ext_resource type="Texture2D" uid="uid://l25asijy8cyi" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg" id="10_ogexa"]
 [ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ogexa"]
+font_size = 120
+font_color = Color(1, 0.6095435, 0.89974964, 1)
+outline_size = 65
+outline_color = Color(0.27450982, 0.46666667, 0.74509805, 1)
+shadow_size = 136
+shadow_color = Color(0.21568628, 0.21960784, 0.2627451, 1)
 
 [sub_resource type="Resource" id="Resource_s37ku"]
 script = ExtResource("5_6a6jl")
@@ -20,7 +31,13 @@ scene_script = "# Plays an adio file from the folder set in the configuration wi
 [node name="BVN Novel Template" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(575, 327)
+position = Vector2(581, 313)
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+editor_draw_limits = true
+editor_draw_drag_margin = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -30,12 +47,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -478.0
-offset_top = -97.0
-offset_right = -268.0
-offset_bottom = -29.0
+offset_left = -339.0
+offset_top = -245.0
+offset_right = -42.52942
+offset_bottom = -149.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("1_fybqi")
 text = "Load Session"
 script = ExtResource("1_3v2nj")
 metadata/_custom_type_script = "uid://66bfvkefkbhb"
@@ -44,19 +62,36 @@ metadata/_custom_type_script = "uid://66bfvkefkbhb"
 script = ExtResource("2_x3un8")
 target_node = NodePath("..")
 
-[node name="Start Game" type="Button" parent="CanvasLayer"]
+[node name="Start Demo" type="Button" parent="CanvasLayer"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -241.0
-offset_top = -98.0
-offset_right = -30.419434
-offset_bottom = -30.0
+offset_left = -336.45154
+offset_top = -355.0
+offset_right = -45.35498
+offset_bottom = -261.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Start Game"
+theme = ExtResource("1_fybqi")
+text = "Start Demo"
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -684.0
+offset_top = 54.0
+offset_right = -72.0
+offset_bottom = 219.0
+grow_horizontal = 0
+text = "BVN Script"
+label_settings = SubResource("LabelSettings_ogexa")
+
+[node name="Main Menu Music" type="AudioStreamPlayer2D" parent="CanvasLayer"]
+stream = ExtResource("3_mschf")
+autoplay = true
 
 [node name="Mini Games" type="Node" parent="."]
 script = ExtResource("3_x3un8")
@@ -92,11 +127,21 @@ script = ExtResource("4_5v76j")
 scene_data = SubResource("Resource_s37ku")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
 
+[node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+position = Vector2(613, 206.99998)
+scale = Vector2(1.4718155, 1.4718155)
+texture = ExtResource("10_ogexa")
+flip_h = true
+metadata/_edit_lock_ = true
+
 [node name="Girl" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
-position = Vector2(234, 462)
+position = Vector2(223, 485)
 texture = ExtResource("10_7aocb")
 flip_h = true
 
 [node name="Boy" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+visible = false
 position = Vector2(881, 399)
 texture = ExtResource("11_0fssw")
+
+[connection signal="pressed" from="CanvasLayer/Start Demo" to="BVN_Engine" method="start_visual_novel"]

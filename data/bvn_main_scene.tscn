@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://cr10vu15xk07h"]
+[gd_scene load_steps=15 format=3 uid="uid://cr10vu15xk07h"]
 
 [ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_q8q11"]
 [ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="2_gnu8n"]
+[ext_resource type="Script" uid="uid://bta4kxdel1ks7" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_message_label.gd" id="3_gnu8n"]
 [ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="3_t0g5g"]
 [ext_resource type="Script" uid="uid://dvmygi75fskfb" path="res://addons/bvn-script/engine/bvn_engine.gd" id="4_owpmc"]
 [ext_resource type="Resource" uid="uid://btxbr1juny128" path="res://data/bvn_main_novel.tres" id="5_xmt3d"]
@@ -15,8 +16,9 @@
 
 [sub_resource type="Resource" id="Resource_s37ku"]
 script = ExtResource("10_2t77b")
-scene_script = "# Plays an adio file from the folder set in the configuration wizard
-> audio.play(\"guitar.ogg\")"
+scene_script = ": Welcome to BVN-Script
+# Plays an adio file from the folder set in the configuration wizard
+> audio.play(\"guitar.oggx\")"
 
 [node name="BVNI Root Node" type="Node2D"]
 
@@ -58,6 +60,15 @@ offset_bottom = -30.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Start Game"
+
+[node name="Message Box" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 90.0
+offset_top = 484.0
+offset_right = 1115.0
+offset_bottom = 627.0
+text = "Welcome to BVN-Script"
+script = ExtResource("3_gnu8n")
+metadata/_custom_type_script = "uid://bta4kxdel1ks7"
 
 [node name="Mini Games" type="Node" parent="."]
 script = ExtResource("3_t0g5g")

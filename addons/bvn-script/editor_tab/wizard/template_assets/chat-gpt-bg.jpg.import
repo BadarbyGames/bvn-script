@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://duhxnlh0o7c0o"
-path="res://.godot/imported/chat-gpt-boy.png-503dae4dcaaf1a53b29253c0e08590e4.ctex"
+uid="uid://l25asijy8cyi"
+path="res://.godot/imported/chat-gpt-bg.jpg-93eb7a990551e29244d49e52e963c551.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/bvn-sources/images/chat-gpt-boy.png"
-dest_files=["res://.godot/imported/chat-gpt-boy.png-503dae4dcaaf1a53b29253c0e08590e4.ctex"]
+source_file="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg"
+dest_files=["res://.godot/imported/chat-gpt-bg.jpg-93eb7a990551e29244d49e52e963c551.ctex"]
 
 [params]
 

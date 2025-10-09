@@ -4,17 +4,63 @@ extends BVN_Resources
 ## This is general information about the visual novel
 class_name BVN_VisualNovel
 
-@export var characters:Array[BVN_CharacterSheet]
+@export var characters:Array[BVN_CharacterSheet]:
+	set(v):
+		characters = v
+		_rebuild_cache.call_deferred()
 
+func _init() -> void:
+	_rebuild_cache()
+	
 var character_cache:Dictionary = {}
+var alias_cache:Dictionary = {}
 func find_character_by_name(char_name:String) -> BVN_CharacterSheet:
-	var tmp := char_name.to_lower()
+	char_name = char_name if char_name else ".narrator"
+	return alias_cache.get(
+		char_name, 
+		character_cache.get(char_name)
+	)
 	
-	var found:BVN_CharacterSheet = character_cache.get(tmp,null)
-	if found: return found
-	
-	for character in characters:
-		if character.display_name.to_lower().begins_with(tmp):
-			character_cache[tmp] = character
-			return character
-	return null
+func _rebuild_cache():
+	character_cache.clear()
+	alias_cache.clear()
+	var narrator:BVN_CharacterSheet
+	for i in characters.size():
+		var character := characters[i]
+		if character == null: 
+			# When adding a new element via inspector, it starts as null. 
+			continue
+		if character.is_narrator:
+			if narrator:
+				var identifier := '%s'
+				if character.alias:
+					identifier += ' with alias(%s)' % ','.join(character.alias)
+				identifier += str(' at index ', i)
+				printerr("Found another narrator %s " % identifier)
+			else:
+				narrator = character
+		
+		if character_cache.has(character.display_name):
+			var identifier := character.display_name
+			if character.alias:
+				identifier += ' with alias(%s)' % ','.join(character.alias)
+			identifier += str(' at index ', i)
+			printerr("⚠ '%s' is not unique. You will not be able to access this character by display name." % identifier)
+		else:
+			character_cache[character.display_name] = character
+			
+		for alias in character.alias:
+			if alias_cache.has(alias):
+				var identifier := alias
+				if character.alias:
+					identifier += ' with alias(%s)' % ','.join(character.alias)
+				identifier += str(' at index ', i)
+				printerr("⚠ Alias '%s' from '%s' is not unique. You will not be able to access this character by this alias." % [alias, identifier])
+			else:
+				character_cache[alias] = character
+				
+	if !narrator:
+		narrator = BVN_CharacterSheet.new()
+		narrator.display_name = ""
+		narrator.alias = [".narrator"]
+	alias_cache[".narrator"] = narrator
