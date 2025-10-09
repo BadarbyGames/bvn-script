@@ -15,11 +15,12 @@ setup/audio_folder="res://assets"
 dialogue/text_speed=55
 debug/add_child_mode=1
 debug/hotspots_visible=false
-debug/last_edited_engine="res://addons/bvn-script/editor_tab/wizard/template/bvni_novel_template.tscn"
+debug/last_edited_engine="res://data/bvn_main_scene.tscn"
 
 [application]
 
 config/name="bvn-script-development"
+run/main_scene="uid://dht23rfsaeuau"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

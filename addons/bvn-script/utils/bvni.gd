@@ -28,7 +28,7 @@ static func add_child(parent:Node, child:Node, add_child_mode:Node.InternalMode 
 	return child
 
 static func find_resource(path:String, hint = null) -> Array:
-	var resource_paths:Array[String] = [BVN_Settings.setup_audio_folder]
+	var resource_paths:Array[String] = [BVN_Settings.setup_audio_folder, BVN_Settings.setup_images_folder]
 	
 	for base_path in resource_paths:
 		var resource_path := str(base_path,"/", path)

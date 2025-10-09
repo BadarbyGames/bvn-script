@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqkdhqy74804t"]
+[gd_scene load_steps=13 format=3 uid="uid://dqkdhqy74804t"]
 
 [ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_3v2nj"]
 [ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="1_oxtqp"]
@@ -9,13 +9,18 @@
 [ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="3_x3un8"]
 [ext_resource type="Script" uid="uid://c60r2udmkdqps" path="res://addons/bvn-script/models/bvn_scene.gd" id="4_5v76j"]
 [ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="5_6a6jl"]
+[ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
+[ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
 
-[sub_resource type="Resource" id="Resource_3v2nj"]
+[sub_resource type="Resource" id="Resource_s37ku"]
 script = ExtResource("5_6a6jl")
-scene_script = "# Plays an audio fi
+scene_script = "# Plays an adio file from the folder set in the configuration wizard
 > audio.play(\"guitar.ogg\")"
 
 [node name="BVN Novel Template" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 327)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -84,5 +89,14 @@ metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 
 [node name="BVN_Scene" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
 script = ExtResource("4_5v76j")
-scene_data = SubResource("Resource_3v2nj")
+scene_data = SubResource("Resource_s37ku")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="Girl" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+position = Vector2(234, 462)
+texture = ExtResource("10_7aocb")
+flip_h = true
+
+[node name="Boy" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+position = Vector2(881, 399)
+texture = ExtResource("11_0fssw")

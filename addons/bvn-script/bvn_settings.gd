@@ -18,6 +18,10 @@ static var setup_data_folder: String:
 static var setup_audio_folder: String:
 	get: return _load("setup/audio_folder", "")
 	set(v): _save("setup/audio_folder", v)
+	
+static var setup_images_folder: String:
+	get: return _load("setup/images_folder", "")
+	set(v): _save("setup/images_folder", v)
 
 static var last_edited_engine: String:
 	get: return _load("debug/last_edited_engine", "")

@@ -7,6 +7,7 @@ class_name BVNInternal_StartWizard
 @export var diag_inform:AcceptDialog
 @export var data_line_edit:LineEdit
 @export var audio_line_edit:LineEdit
+@export var image_line_edit:LineEdit
 @export var novel_template_packed_scene:PackedScene
 @export var descrpt_label:RichTextLabel
 
@@ -14,22 +15,26 @@ var current_line_edit:LineEdit
 var current_proj_setter:Callable # This way because BVN_Settings is a static class and i cant be dynamic
 var selected_folder:String
 func _enter_tree() -> void:
-	if !data_line_edit.focus_entered.is_connected(_on_click_input):
-		data_line_edit.focus_entered.connect(_on_click_input.bind(data_line_edit))
-		data_line_edit.focus_entered.connect(set.bind("current_proj_setter", func(dir): BVN_Settings.setup_data_folder = dir))
-	if !audio_line_edit.focus_entered.is_connected(_on_click_input):
-		audio_line_edit.focus_entered.connect(_on_click_input.bind(audio_line_edit))
-		audio_line_edit.focus_entered.connect(set.bind("current_proj_setter", func(dir): BVN_Settings.setup_audio_folder = dir))
 	sync_settings()
 	
 func sync_settings():
 	data_line_edit.text = BVN_Settings.setup_data_folder
+	if !data_line_edit.focus_entered.is_connected(_on_click_input):
+		data_line_edit.focus_entered.connect(_on_click_input.bind(data_line_edit))
+		data_line_edit.focus_entered.connect(set.bind("current_proj_setter", func(dir): BVN_Settings.setup_data_folder = dir))
+		
 	audio_line_edit.text = BVN_Settings.setup_audio_folder
+	if !audio_line_edit.focus_entered.is_connected(_on_click_input):
+		audio_line_edit.focus_entered.connect(_on_click_input.bind(audio_line_edit))
+		audio_line_edit.focus_entered.connect(set.bind("current_proj_setter", func(dir): BVN_Settings.setup_audio_folder = dir))
+		
+	image_line_edit.text = BVN_Settings.setup_audio_folder
+	if !image_line_edit.focus_entered.is_connected(_on_click_input):
+		image_line_edit.focus_entered.connect(_on_click_input.bind(image_line_edit))
+		image_line_edit.focus_entered.connect(set.bind("current_proj_setter", func(dir): BVN_Settings.setup_data_folder = dir))
 
 func _on_click_input(line_edit:LineEdit) -> void:
 	current_line_edit = line_edit
-	
-	
 	diag_select_dir.current_dir = line_edit.text
 	diag_select_dir.show()
 
@@ -39,16 +44,30 @@ func _on_select_dir_dialogue_dir_selected(dir: String) -> void:
 	current_proj_setter.call(dir)
 	sync_settings()
 
-
 func _on_select_dir_dialogue_canceled() -> void:
 	get_viewport().gui_release_focus()
 
 func _generate_template() -> void:
 	var plugin_folder := BVNInternal.get_plugin_path()
-	var assets_folder := str(plugin_folder, "/editor_tab/wizard/template_assets/")
+	var assets_template_folder := str(plugin_folder, "/editor_tab/wizard/template_assets/")
+	var assets_folder = BVN_Settings.setup_audio_folder
 	
 	ensure_dir(BVN_Settings.setup_data_folder)
-	copy_folder(assets_folder, BVN_Settings.setup_audio_folder)
+	copy_folder(assets_template_folder, BVN_Settings.setup_audio_folder)
+		
+	#region CUSTOM POLL LOGIC
+	var editor_fs := EditorInterface.get_resource_filesystem()
+	editor_fs.scan()
+	
+	var looking = true
+	var safe_number = 100
+	while looking and safe_number > 0: 
+		safe_number -= 1
+		await get_tree().create_timer(0.25).timeout
+		if ResourceLoader.exists(str(assets_folder,"/chat-gpt-boy-16.png")):
+			looking = false
+	assert(!looking, "Asset folder could not be created.")
+	#endregion
 	
 	var vn_resource:BVN_VisualNovel = generate_vn_resource()
 	var vn_engine:PackedScene = generate_vn_main_scene(vn_resource)
@@ -62,10 +81,9 @@ func _generate_template() -> void:
 	"""  %  [vn_resource.resource_path, vn_engine.resource_path]
 	diag_inform.dialog_text = diag_inform.dialog_text.strip_edges()
 	diag_inform.confirmed.connect(func ():
-		var editor_fs := EditorInterface.get_resource_filesystem()
 		if editor_fs:
-			#editor_fs.scan_sources()
-			editor_fs.scan()
+			editor_fs.scan_sources()
+			#editor_fs.scan()
 		, CONNECT_ONE_SHOT)
 	diag_inform.show()
 	
@@ -73,6 +91,15 @@ func _generate_template() -> void:
 func generate_vn_resource() -> BVN_VisualNovel:
 	var data_path :String = BVN_Settings.setup_data_folder
 	var novel := BVN_VisualNovel.new()
+	
+	var girl := BVN_CharacterSheet.new()
+	girl.display_name = "girl"
+	novel.characters.append(girl)
+	
+	var boy := BVN_CharacterSheet.new()
+	boy.display_name = "boy"
+	novel.characters.append(boy)
+	
 
 	var file_name:String = "bvn_main_novel"
 	var file_path:String = "%s/%s.tres" % [data_path,file_name]
@@ -82,6 +109,7 @@ func generate_vn_resource() -> BVN_VisualNovel:
 	assert(err == OK, error_string(err))
 	return novel
 
+var test = preload("res://assets/chat-gpt-boy-16.png")
 func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	var data_path :String = BVN_Settings.setup_data_folder
 	var file_name:String = "bvn_main_scene"
@@ -89,6 +117,16 @@ func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	
 	var root_node:Node = novel_template_packed_scene.instantiate()
 	root_node.name = "BVNI Root Node"
+	
+	var new_assets_dir = BVN_Settings.setup_images_folder
+	for sprite2d:Sprite2D in BdbSelect.children_by_type_recursive(root_node, Sprite2D):
+		var texture_file_name := sprite2d.texture.resource_path.get_file()
+		var texture_file_path := str(new_assets_dir,"/",texture_file_name)
+		
+		var response := BVNInternal.find_resource(texture_file_path)
+		if response[0] == OK:
+			sprite2d.texture = response[1]
+	
 	var bvn_engine:BVN_Engine = BdbSelect.child_by_type_recursive(root_node, BVN_Engine)
 	bvn_engine.visual_novel = vn_resource
 	
@@ -124,7 +162,7 @@ func copy_folder(src_path: String, dst_path: String) -> void:
 	src_dir.list_dir_begin()
 	var file_name := src_dir.get_next()
 	while file_name != "":
-		if file_name.begins_with("."):  # skip hidden system entries
+		if file_name.begins_with(".") or file_name.ends_with(".import"):  # skip hidden system entries
 			file_name = src_dir.get_next()
 			continue
 
