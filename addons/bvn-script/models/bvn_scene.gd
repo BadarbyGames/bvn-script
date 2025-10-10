@@ -12,7 +12,7 @@ var scene_set:BVN_SceneSet:
 	get: return BVN_EngineSelectors.find_bvn_scene_set_ancestor(self)
 
 func _init() -> void:
-	tree_entered.connect(setup, CONNECT_ONE_SHOT)
+	BdbSig.sig_conn(tree_entered, setup)
 
 func _setup(): pass
 func setup():

@@ -139,7 +139,6 @@ func replace_node_assets(node: Node):
 			
 			var tmp =  await wait_and_find_resource(res_name)
 			audio.stream = tmp
-			print("@@TMP ",tmp, " ", audio.stream)
 			continue
 		await replace_node_assets(child)
 		
@@ -150,7 +149,6 @@ func wait_and_find_resource(res_path:String):
 		safe_number -= 1
 		var response = BVNInternal.find_resource(res_path)
 		if response[0] == OK:
-			print("@@found ", res_path)
 			return response[1]
 		await get_tree().create_timer(0.25).timeout
 		if !EditorInterface.get_resource_filesystem().is_scanning():

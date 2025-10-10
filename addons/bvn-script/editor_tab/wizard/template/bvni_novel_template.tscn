@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dqkdhqy74804t"]
+[gd_scene load_steps=26 format=3 uid="uid://dqkdhqy74804t"]
 
 [ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_3v2nj"]
 [ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="1_oxtqp"]
@@ -11,7 +11,11 @@
 [ext_resource type="Script" uid="uid://c60r2udmkdqps" path="res://addons/bvn-script/models/bvn_scene.gd" id="4_5v76j"]
 [ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="5_6a6jl"]
 [ext_resource type="Script" uid="uid://bta4kxdel1ks7" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_message_label.gd" id="7_fybqi"]
+[ext_resource type="Script" uid="uid://dufv56y535c0d" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_bleeps.gd" id="8_oeejf"]
+[ext_resource type="Script" uid="uid://by0qal8whushg" path="res://addons/bvn-script/models/bvn_character_sheet.gd" id="9_7agit"]
 [ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
+[ext_resource type="Script" uid="uid://c58pwovtchj5g" path="res://addons/bvn-script/models/bvn_visual_novel.gd" id="10_cwugk"]
+[ext_resource type="AudioStream" uid="uid://cswwbvy04su8b" path="res://addons/bvn-script/editor_tab/wizard/template_assets/guitar.ogg" id="10_oeejf"]
 [ext_resource type="Texture2D" uid="uid://l25asijy8cyi" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg" id="10_ogexa"]
 [ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
 
@@ -44,11 +48,24 @@ outline_color = Color(0.27450982, 0.46666667, 0.74509805, 1)
 shadow_size = 136
 shadow_color = Color(0.21568628, 0.21960784, 0.2627451, 1)
 
+[sub_resource type="Resource" id="Resource_oeejf"]
+script = ExtResource("9_7agit")
+display_name = "Bivini"
+voice_bleeps = Array[AudioStream]([ExtResource("10_oeejf")])
+metadata/_custom_type_script = "uid://by0qal8whushg"
+
+[sub_resource type="Resource" id="Resource_sdoxj"]
+script = ExtResource("10_cwugk")
+characters = Array[ExtResource("9_7agit")]([SubResource("Resource_oeejf")])
+metadata/_custom_type_script = "uid://c58pwovtchj5g"
+
 [sub_resource type="Resource" id="Resource_s37ku"]
 script = ExtResource("5_6a6jl")
-scene_script = "> %GUI.show()
-Bivini: Welcome
-# Plays an adio file from the folder set in the configuration wizard
+scene_script = "# Show the man chat gui
+> %GUI.show()
+Bivini: Hi, my name is Bivini! So [b]excited[/b] to meet you ~
+Bivini: yes
+# Plays an aduio file from the folder set in the configuration wizard
 > audio.play(\"guitar.ogg\")"
 
 [node name="BVN Novel Template" type="Node2D"]
@@ -62,6 +79,11 @@ limit_bottom = 648
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
+[node name="BVN_GuiSpeakerBleeps" type="AudioStreamPlayer2D" parent="Camera2D"]
+stream = ExtResource("10_oeejf")
+script = ExtResource("8_oeejf")
+metadata/_custom_type_script = "uid://dufv56y535c0d"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_mschf")
 autoplay = true
@@ -73,7 +95,6 @@ script = ExtResource("3_x3un8")
 metadata/_custom_type_script = "uid://b7qwe44ascmiv"
 
 [node name="Main Menu" type="Control" parent="Main Menu/Menu Items"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,25 +179,41 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_mschf")
 
-[node name="BVN_GuiSpeakerMessageBox" type="RichTextLabel" parent="Main Menu/GUI"]
+[node name="MarginContainer" type="MarginContainer" parent="Main Menu/GUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 39.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Panel" type="Panel" parent="Main Menu/GUI/MarginContainer"]
+layout_mode = 2
+theme_type_variation = &"SpeakerBox"
+
+[node name="MarginContainer" type="MarginContainer" parent="Main Menu/GUI/MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="BVN_GuiSpeakerMessageBox" type="RichTextLabel" parent="Main Menu/GUI/MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Hi, my name is Bivini! So [b]excited[/b] to meet you ~"
+fit_content = true
 script = ExtResource("7_fybqi")
 metadata/_custom_type_script = "uid://bta4kxdel1ks7"
-
-[node name="Panel" type="Panel" parent="Main Menu/GUI/BVN_GuiSpeakerMessageBox"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_type_variation = &"SpeakerBox"
 
 [node name="Mini Games" type="Node" parent="."]
 script = ExtResource("3_x3un8")
@@ -184,10 +221,9 @@ script = ExtResource("3_x3un8")
 [node name="Tetris" type="Node2D" parent="Mini Games"]
 visible = false
 
-[node name="BVN_Engine" type="Node2D" parent="." node_paths=PackedStringArray("starting_node", "managed_canvas")]
+[node name="BVN_Engine" type="Node2D" parent="." node_paths=PackedStringArray("managed_canvas")]
 script = ExtResource("2_4htiu")
-autoplay = true
-starting_node = NodePath("../Main Menu/Menu Items/Main Menu")
+visual_novel = SubResource("Resource_sdoxj")
 managed_canvas = NodePath("BVN Internal Autogenerated Canvas")
 metadata/_custom_type_script = "uid://dvmygi75fskfb"
 
@@ -209,6 +245,7 @@ script = ExtResource("3_nvh8d")
 metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 
 [node name="BVN_Scene" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
+visible = false
 script = ExtResource("4_5v76j")
 scene_data = SubResource("Resource_s37ku")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"

@@ -21,11 +21,11 @@ func _init() -> void:
 		text_synchronizer.target_node = self
 		text_synchronizer.sync_mode = BVN_SynchronizedTextVM.MODE_SPEAKER_NAME
 		add_child(text_synchronizer, false, Node.INTERNAL_MODE_FRONT)
-		, CONNECT_ONE_SHOT)
+		)
 	tree_exited.connect(func ():
 		if is_instance_valid(text_synchronizer):
 			text_synchronizer.queue_free()
-		, CONNECT_ONE_SHOT)
+		)
 		
 func _get_configuration_warnings() -> PackedStringArray:
 	if text:

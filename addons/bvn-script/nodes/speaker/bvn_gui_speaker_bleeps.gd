@@ -1,3 +1,4 @@
+@tool
 extends AudioStreamPlayer2D
 
 ## Audio2D that synchronizes bleep sounds with the message display

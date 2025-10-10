@@ -12,14 +12,31 @@ class_name BVN_VisualNovel
 func _init() -> void:
 	_rebuild_cache()
 	
-var character_cache:Dictionary = {}
-var alias_cache:Dictionary = {}
+var character_cache:Dictionary[String, BVN_CharacterSheet] = {}
+var alias_cache:Dictionary[String, BVN_CharacterSheet] = {}
 func find_character_by_name(char_name:String) -> BVN_CharacterSheet:
+	
+	
 	char_name = char_name.to_lower() if char_name else ".narrator"
-	return alias_cache.get(
+	var found := alias_cache.get(
 		char_name, 
 		character_cache.get(char_name)
 	)
+	
+	#region EDITOR LOGIC
+	if !found and Engine.is_editor_hint():
+		# If in editor, you can change character's names. This is a problem because
+		# The cache is added _on_init() so in the editor its easier if we just rebuild the cache
+		# if it doesnt exist to be double sure
+		_rebuild_cache()
+		
+		found = alias_cache.get(
+			char_name, 
+			character_cache.get(char_name)
+		)
+	#endregion
+	
+	return found
 	
 func _rebuild_cache():
 	character_cache.clear()
