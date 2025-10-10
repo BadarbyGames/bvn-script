@@ -14,7 +14,19 @@ class_name BVN_Engine
 		visual_novel = v
 
 ## Begins the VN Engine as soon as its ready.
-@export var autoplay:bool = true
+@export var autoplay:bool = false
+
+## When start_visual_novel() is called, this node is the first node loaded.
+## If not specified, it will find the first available BVN_Scene in the tree.
+@export var starting_node: Node:
+	set(n):
+		if n == null or n is BVN_Scene or n.get_parent() is BVN_ManagedNodes:
+			starting_node = n
+		else:
+			printerr(
+				"Starting node must be a <%s> or a child of <%s>"
+				% [Bdb.toString(BVN_Scene), Bdb.toString(BVN_ManagedNodes)]
+			)
 
 @export_group("Advanced Configuration")
 
@@ -152,11 +164,21 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return errors
 	
 func start_visual_novel():
-	var scene:BVN_Scene
+	if starting_node and starting_node != BVN_Scene:
+		starting_node.show()
+		return
+		
+	
+	var scene:BVN_Scene = starting_node
+	#region FROM LOAD REQUEST
 	if scene_service.scene_context:
 		scene = scene_service.scene_context.scene
+	#endregion
+		
+	#region NO STARTING
 	elif scene_service.scenes:
 		scene = BdbSelect.item_by_type(scene_service.scenes, BVN_Scene)
+	#endregion
 	assert(scene, "Couldn't find a scene to use")
 	run_scene(scene)
 

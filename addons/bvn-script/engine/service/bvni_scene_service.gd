@@ -6,7 +6,7 @@ class_name BVNInernal_SceneService
 var scenes:Array[Node]:
 	get:
 		var scenes:Array[Node]= []
-		for scene in get_tree().get_nodes_in_group(BVNInternal_Tags.SCENE):
+		for scene in get_tree().get_nodes_in_group(BVNInternal_Tags.NODE_MANAGED):
 			if scene.has_signal("visibility_changed"):
 				scenes.append(scene)
 		return scenes

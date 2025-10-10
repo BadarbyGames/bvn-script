@@ -15,3 +15,9 @@ static func exec(cb:Callable):
 	return cb.call()
 
 static func noop(a = null,b = null,c = null,d = null,e = null): return
+
+static func toString(v:Variant):
+	if v is Script and (v as Script).has_method("get_global_name"):
+		return (v as Script).get_global_name()
+	return str(v)
+		

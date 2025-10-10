@@ -15,7 +15,7 @@ func connect_child(node:Node):
 	if node is BVN_ManagedNodes: return
 	
 	var fn := BVN_EventBus.on_request_activate_scene.emit
-	node.add_to_group(BVNInternal_Tags.SCENE)
+	node.add_to_group(BVNInternal_Tags.NODE_MANAGED)
 	
 	# Handler for when visiblity is toggled
 	if !node.visibility_changed.is_connected(fn):
@@ -34,7 +34,7 @@ func disconnect_child(node:Node):
 	if node is BVN_ManagedNodes: return
 	
 	var fn := BVN_EventBus.on_request_activate_scene.emit
-	node.remove_from_group(BVNInternal_Tags.SCENE)
+	node.remove_from_group(BVNInternal_Tags.NODE_MANAGED)
 	
 	# Handler for when visiblity is toggled
 	if node.visibility_changed.is_connected(fn):

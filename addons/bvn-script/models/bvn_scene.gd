@@ -19,8 +19,8 @@ func setup():
 	if !scene_data: 
 		scene_data = BVN_SceneData.new()
 		assert(scene_set, "Needs to be a child of either the engine or a scene set")
-	add_to_group(BVNInternal_Tags.SCENE)
-	add_to_group(BVNInternal_Tags.SCENE_PAGE)
+	add_to_group(BVNInternal_Tags.NODE_MANAGED)
+	add_to_group(BVNInternal_Tags.NODE_SCENE)
 	_setup()
 	
 		
