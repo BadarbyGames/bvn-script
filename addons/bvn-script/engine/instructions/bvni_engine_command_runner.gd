@@ -14,7 +14,7 @@ var rx_api_call := {
 
 var rx_regular_node := {
 	"rx" : RegEx.create_from_string(r"""(\$|(?<s>\%))(?:("|')(?<c>[^"'.]+)("|')|(?<d>[^.\s]+))"""),
-	"replacement": "api.node.get_node_from_context('$s$c$d')"
+	"replacement": "node.get_node_from_context('$s$c$d')"
 }
 
 ## Removes GT sign (at the beginning)
@@ -22,7 +22,7 @@ var rx_rm_gt := {
 	"rx" : RegEx.create_from_string(r"""^[\s\t]*\>[\s\t]*"""),
 	"replacement": "",
 }
-var expansion_sets := [rx_assignment,rx_api_call,rx_regular_node, rx_rm_gt]
+
 
 var base_instance:CmdContext
 var visual_novel:BVN_VisualNovel
@@ -70,19 +70,26 @@ func execute_ifelse_node(ifelse_node:Bvn_AstNode, vars:Dictionary, node_context:
 	var command = text.substr(start_index,end_index-2)
 	var result = execute(command, vars, node_context)
 	return result[0] == OK and result[1]
+
+var expansion_sets := [rx_assignment,rx_regular_node, rx_api_call, rx_rm_gt]
+func expand_command(command:String,vars:Dictionary = {}) -> String:
+	command.format(vars, &"{{_}}").strip_edges()
+	
+	#region NODE_EXPANSION
+	for i in expansion_sets.size():
+		var expansion_set = expansion_sets[i]
+		var rx:RegEx = expansion_set.rx
+		var replacement:String = expansion_set.replacement
+		var new_command := rx.sub(command, replacement, true)
+		command = new_command
+	#endregion
+	command = command.strip_edges()
+	return command
 	
 const EMPTY_ARRAY := []
 func execute(tmp:String, vars:Dictionary, node_context: Node) -> Array:
 	var expression = Expression.new()
-	var command := tmp.format(vars, &"{{_}}").strip_edges()
-	
-	#region NODE_EXPANSION
-	for expansion_set in expansion_sets:
-		var rx:RegEx = expansion_set.rx
-		var replacement:String = expansion_set.replacement
-		command = rx.sub(command, replacement, true)
-	#endregion
-	command = command.strip_edges()
+	var command := expand_command(tmp, vars)
 	if !command:
 		return []
 		

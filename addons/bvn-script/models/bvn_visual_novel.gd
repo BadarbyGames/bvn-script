@@ -7,7 +7,7 @@ class_name BVN_VisualNovel
 @export var characters:Array[BVN_CharacterSheet]:
 	set(v):
 		characters = v
-		_rebuild_cache.call_deferred()
+		_rebuild_cache()
 
 func _init() -> void:
 	_rebuild_cache()
@@ -15,7 +15,7 @@ func _init() -> void:
 var character_cache:Dictionary = {}
 var alias_cache:Dictionary = {}
 func find_character_by_name(char_name:String) -> BVN_CharacterSheet:
-	char_name = char_name if char_name else ".narrator"
+	char_name = char_name.to_lower() if char_name else ".narrator"
 	return alias_cache.get(
 		char_name, 
 		character_cache.get(char_name)
@@ -47,7 +47,7 @@ func _rebuild_cache():
 			identifier += str(' at index ', i)
 			printerr("⚠ '%s' is not unique. You will not be able to access this character by display name." % identifier)
 		else:
-			character_cache[character.display_name] = character
+			character_cache[character.display_name.to_lower()] = character
 			
 		for alias in character.alias:
 			if alias_cache.has(alias):
@@ -57,7 +57,7 @@ func _rebuild_cache():
 				identifier += str(' at index ', i)
 				printerr("⚠ Alias '%s' from '%s' is not unique. You will not be able to access this character by this alias." % [alias, identifier])
 			else:
-				character_cache[alias] = character
+				alias_cache[alias.to_lower()] = character.to_lower()
 				
 	if !narrator:
 		narrator = BVN_CharacterSheet.new()

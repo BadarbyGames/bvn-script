@@ -22,11 +22,11 @@ func connect_child(node:Node):
 		var payload := {"node":node}
 		var cb := fn.bind(payload)
 		
-		# Sometimes the node is already visible, so now change is emitted
+		# Sometimes the node is already visible, so no change is emitted
 		# so we "forcefully" call the callback, to hide the other nodes.
 		# We also need to call this before the signals are added so we dont
 		# double emit.
-		node.visible = true
+		node.visible = node.visible
 		cb.call() 		
 		node.visibility_changed.connect(cb)
 			

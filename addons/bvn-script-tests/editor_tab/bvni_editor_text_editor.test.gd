@@ -6,10 +6,11 @@ var test_scene:BVN_Scene
 var variables:BVN_Variables
 func before_each():
 	visual_novel = BVN_VisualNovel.new()
-	visual_novel.characters = [
-		BVN_CharacterSheet.new()
-	]
-	visual_novel.characters[0].display_name = "personA"
+	
+	var personA := BVN_CharacterSheet.new()
+	personA.display_name = "personA"
+	
+	visual_novel.characters = [personA]
 	
 	#region Create Engine
 	engine = add_child_autofree(BVN_Engine.new())

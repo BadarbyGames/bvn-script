@@ -4,7 +4,8 @@ static var tree:SceneTree:
 	get: return Engine.get_main_loop()
 
 static var engine:BVN_Engine:
-	get: return tree.get_first_node_in_group(BVNInternal_Tags.ENGINE)
+	get: 
+		return tree.get_first_node_in_group(BVNInternal_Tags.ENGINE)
 	
 static var engine_session:BVNInternal_SessionService:
 	get: return tree.get_first_node_in_group(BVNInternal_Tags.ENGINE_SESSION)
