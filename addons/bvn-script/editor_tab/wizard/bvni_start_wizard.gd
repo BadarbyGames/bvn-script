@@ -48,29 +48,17 @@ func _on_select_dir_dialogue_canceled() -> void:
 	get_viewport().gui_release_focus()
 
 func _generate_template() -> void:
+	var editor_fs := EditorInterface.get_resource_filesystem()
 	var plugin_folder := BVNInternal.get_plugin_path()
 	var assets_template_folder := str(plugin_folder, "/editor_tab/wizard/template_assets/")
 	var assets_folder = BVN_Settings.setup_audio_folder
 	
 	ensure_dir(BVN_Settings.setup_data_folder)
 	copy_folder(assets_template_folder, BVN_Settings.setup_audio_folder)
-		
-	#region CUSTOM POLL LOGIC
-	var editor_fs := EditorInterface.get_resource_filesystem()
 	editor_fs.scan()
 	
-	var looking = true
-	var safe_number = 100
-	while looking and safe_number > 0: 
-		safe_number -= 1
-		await get_tree().create_timer(0.25).timeout
-		if ResourceLoader.exists(str(assets_folder,"/chat-gpt-boy-16.png")):
-			looking = false
-	assert(!looking, "Asset folder could not be created.")
-	#endregion
-	
 	var vn_resource:BVN_VisualNovel = generate_vn_resource()
-	var vn_engine:PackedScene = generate_vn_main_scene(vn_resource)
+	var vn_engine:PackedScene = await generate_vn_main_scene(vn_resource)
 	
 	EditorInterface.open_scene_from_path(vn_engine.resource_path)
 	diag_inform.title = "File Generated"
@@ -109,7 +97,6 @@ func generate_vn_resource() -> BVN_VisualNovel:
 	assert(err == OK, error_string(err))
 	return novel
 
-var test = preload("res://assets/chat-gpt-boy-16.png")
 func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	var data_path :String = BVN_Settings.setup_data_folder
 	var file_name:String = "bvn_main_scene"
@@ -118,14 +105,9 @@ func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	var root_node:Node = novel_template_packed_scene.instantiate()
 	root_node.name = "BVNI Root Node"
 	
-	var new_assets_dir = BVN_Settings.setup_images_folder
-	for sprite2d:Sprite2D in BdbSelect.children_by_type_recursive(root_node, Sprite2D):
-		var texture_file_name := sprite2d.texture.resource_path.get_file()
-		var texture_file_path := str(new_assets_dir,"/",texture_file_name)
-		
-		var response := BVNInternal.find_resource(texture_file_path)
-		if response[0] == OK:
-			sprite2d.texture = response[1]
+	#region REPLACE IMAGES
+	await replace_node_assets(root_node)
+	#endregion
 	
 	var bvn_engine:BVN_Engine = BdbSelect.child_by_type_recursive(root_node, BVN_Engine)
 	bvn_engine.visual_novel = vn_resource
@@ -136,6 +118,45 @@ func generate_vn_main_scene(vn_resource:BVN_VisualNovel) -> PackedScene:
 	ResourceSaver.save(new_packed, file_path)
 	new_packed.take_over_path(file_path)
 	return new_packed
+	
+func replace_node_assets(node: Node):
+	
+	for child:Node in node.get_children():
+		var sprite2d := child as Sprite2D
+		if sprite2d:
+			var new_image_dir := BVN_Settings.setup_images_folder
+			var res_name:String = sprite2d.texture.resource_path.get_file()
+			var new_res_path := str(new_image_dir,"/",res_name)
+			
+			sprite2d.texture = await wait_and_find_resource(new_res_path)
+			continue
+				
+		if child.get("stream") and child.stream is AudioStream:
+			var audio = child
+			var new_audio_dir := BVN_Settings.setup_audio_folder
+			var res_name :String = audio.stream.resource_path.get_file()
+			var new_res_path := str(new_audio_dir,"/",res_name)
+			
+			var tmp =  await wait_and_find_resource(res_name)
+			audio.stream = tmp
+			print("@@TMP ",tmp, " ", audio.stream)
+			continue
+		await replace_node_assets(child)
+		
+func wait_and_find_resource(res_path:String):
+	var looking = true
+	var safe_number = 10
+	while looking and safe_number > 0: 
+		safe_number -= 1
+		var response = BVNInternal.find_resource(res_path)
+		if response[0] == OK:
+			print("@@found ", res_path)
+			return response[1]
+		await get_tree().create_timer(0.25).timeout
+		if !EditorInterface.get_resource_filesystem().is_scanning():
+			EditorInterface.get_resource_filesystem().scan()
+	assert(!looking, "Asset '%s' could not be found" % res_path)
+	return null
 	
 func ensure_dir(path: String) -> void:	
 	var dir := DirAccess.open("res://")

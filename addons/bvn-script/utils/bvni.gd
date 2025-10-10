@@ -32,8 +32,9 @@ static func find_resource(path:String, hint = null) -> Array:
 	
 	for base_path in resource_paths:
 		var resource_path := str(base_path,"/", path)
-		if ResourceLoader.exists(resource_path):
+		#if ResourceLoader.exists(resource_path):
+		if FileAccess.file_exists(resource_path):
 			# @TODO warning - overuse of this might result in increase me usage because of the caching
 			# should we do something about this?
-			return [OK,load(resource_path)]
+			return [OK,ResourceLoader.load(resource_path, "",ResourceLoader.CACHE_MODE_REPLACE)]
 	return [ERR_FILE_NOT_FOUND,null]
