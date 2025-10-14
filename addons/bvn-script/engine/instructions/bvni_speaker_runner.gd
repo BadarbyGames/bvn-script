@@ -133,8 +133,20 @@ func get_text(bbnode:Dictionary) -> String:
 						if bbnode.children[-1] == child: # is last child
 							bbnode.set(&"is_completed", IS_COMPLETED_CONFIRMED)
 						continue
-		final_text = final_text if bbnode.tag == &"root" else\
-			("[%s]%s[/%s]" % [bbnode.tag,final_text,bbnode.tag])
+		if bbnode.tag == &"root":
+			final_text = final_text
+		else:
+			var starting_tag :String = bbnode.tag
+			for attr in bbnode.attr:
+				var attr_val:String = bbnode.attr[attr]
+				if attr == starting_tag: 
+					starting_tag += '=%s' % attr_val
+				else:
+					starting_tag += ' %s="%s"' % [attr,attr_val]
+				
+			var ending_tag :String = bbnode.tag
+			
+			final_text = ("[%s]%s[/%s]" % [starting_tag,final_text,ending_tag])
 		bbnode.set(&"value", final_text) # propagate changes above
 		return final_text
 		

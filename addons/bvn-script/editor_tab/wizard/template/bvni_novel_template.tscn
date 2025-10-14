@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
 [ext_resource type="Script" uid="uid://c58pwovtchj5g" path="res://addons/bvn-script/models/bvn_visual_novel.gd" id="10_cwugk"]
 [ext_resource type="Script" uid="uid://wppdl4rhaako" path="res://addons/bvn-script/nodes/control/modal/bvn_gui_action_hotspot.gd" id="10_j8ty8"]
-[ext_resource type="AudioStream" uid="uid://cswwbvy04su8b" path="res://addons/bvn-script/editor_tab/wizard/template_assets/guitar.ogg" id="10_oeejf"]
 [ext_resource type="Texture2D" uid="uid://l25asijy8cyi" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg" id="10_ogexa"]
 [ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
 [ext_resource type="AudioStream" uid="uid://kdtf3vbnig3s" path="res://addons/bvn-script/editor_tab/wizard/template_assets/bleep001.ogg" id="12_sdoxj"]
@@ -50,9 +49,14 @@ outline_color = Color(0.27450982, 0.46666667, 0.74509805, 1)
 shadow_size = 136
 shadow_color = Color(0.21568628, 0.21960784, 0.2627451, 1)
 
+[sub_resource type="Theme" id="Theme_sdoxj"]
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
+RichTextLabel/font_sizes/bold_font_size = 32
+RichTextLabel/font_sizes/normal_font_size = 32
+
 [sub_resource type="Resource" id="Resource_oeejf"]
 script = ExtResource("9_7agit")
-display_name = "Bivini"
+display_name = "Bivian"
 voice_bleeps = Array[AudioStream]([ExtResource("12_sdoxj")])
 metadata/_custom_type_script = "uid://by0qal8whushg"
 
@@ -65,8 +69,10 @@ metadata/_custom_type_script = "uid://c58pwovtchj5g"
 script = ExtResource("5_6a6jl")
 scene_script = "# Show the man chat gui
 > %GUI.show()
-Bivini: Hi, my name is Bivini! So [b]excited[/b] to meet you ~
-Bivini: yes
+Bivian: Hi, my name is Bivian! So [b]excited[/b] to meet you ~
+Bivian:
+	This project is one of the ways you can setup an entire BVN project.
+	Everything is meant to be used with regular godot nodes!
 # Plays an aduio file from the folder set in the configuration wizard
 > audio.play(\"guitar.ogg\")"
 
@@ -82,7 +88,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="BVN_GuiSpeakerBleeps" type="AudioStreamPlayer2D" parent="Camera2D"]
-stream = ExtResource("10_oeejf")
+stream = ExtResource("12_sdoxj")
 script = ExtResource("8_oeejf")
 metadata/_custom_type_script = "uid://dufv56y535c0d"
 
@@ -211,14 +217,15 @@ theme_override_constants/margin_bottom = 12
 
 [node name="BVN_GuiSpeakerMessageBox" type="RichTextLabel" parent="Main Menu/GUI/MarginContainer/Panel/MarginContainer"]
 layout_mode = 2
+theme = SubResource("Theme_sdoxj")
 bbcode_enabled = true
-text = "Hi, my name is Bivini! So [b]excited[/b] to meet you ~"
+text = "Hi, my name is Bivian! So [b]excited[/b] to meet you ~"
 fit_content = true
 script = ExtResource("7_fybqi")
 metadata/_custom_type_script = "uid://bta4kxdel1ks7"
 
 [node name="BVN_GuiActionHotspot" type="Button" parent="Main Menu/GUI/MarginContainer"]
-modulate = Color(1, 0.003, 0.279, 1)
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "On click - next instruction"

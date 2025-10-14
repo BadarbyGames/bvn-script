@@ -4,9 +4,11 @@ class_name BVNInternal_BBCodeParser
 
 static func parse(text: String) -> Dictionary:
 	var tokens = RegEx.create_from_string(
-		#r"\[/?[a-zA-Z0-9]+(?:=[^\]]+)?\]"
 		r"\[/?(?<tag>[a-zA-Z0-9]+)(?:=[^\]]+)?(?:\s*\w+=\w+)*\]"
-		# r"\[/?[a-zA-Z0-9]+(?:\s+[a-zA-Z0-9_-]+(?:=(?:\"[^\"]*\"|'[^']*'|[^\]\s]+))?)*\]"
+	)
+	
+	var attr_extract_rx = RegEx.create_from_string(
+		r"""(?<tag>\w+)=((?<val>[^\s\"\']+\b)|('(?<val>[^']*)')|("(?<val>[^"]*)"))"""
 	)
 
 	var result = {"tag": "root", "attr": "", "children": []}
@@ -34,8 +36,13 @@ static func parse(text: String) -> Dictionary:
 			var inner = tag_text.substr(1, tag_text.length() - 2) # strip [ ... ]
 			var parts = inner.split("=", false, 1)
 			var tag_name =  m.get_string(&"tag")
+			var attr := {}
+			for attr_extract in attr_extract_rx.search_all(inner):
+				var attr_tag := attr_extract.get_string("tag")
+				var attr_val := attr_extract.get_string("val")
+				attr[attr_tag] = attr_val
+				pass
 			#var attr = parts[1] if parts.size() > 1 else ""
-			var attr = {}
 			
 			var node = {
 				&"tag": tag_name,

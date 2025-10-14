@@ -87,6 +87,15 @@ marie: I'm [b]a little [i]teapot[/i] short and[/b] stout.\
 	assert_text_yields(1, "I'm [b]a little [i]teapot[/i] [/b]")
 	assert_text_yields(9, "I'm [b]a little [i]teapot[/i] short and[/b]")
 	assert_text_yields(6, "I'm [b]a little [i]teapot[/i] short and[/b] stout")
+	
+func test_with_attributes():
+	var ast_node:= parser.parse_bvn_script(
+"""\
+mei: [size=24]hi[/size]
+"""	)
+	runner.load_ast_node(ast_node.children[0], {})
+	assert_text_yields(1, """[size="24"]h[/size]""") 
+	assert_text_yields(2, """[size="24"]hi[/size]""") 
 
 func assert_text_yields(n:int, expected_text:String):
 	move_x_times(n)

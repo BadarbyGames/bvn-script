@@ -1,13 +1,5 @@
 extends GutTest
 
-var rx := RegEx.create_from_string(r"(?<spacer>\s*|^)(?<bbinner>\[\w+\]\w+\[/\w+])+")
-
-var test_cases := [
-	["hello [b]world[/b]", ["[b]world[/b]"], [6]],
-	["[b]foo[/b] bar", ["[b]foo[/b]"], [0]],
-	["[b][i][x]Deep nested[/x][/i][/b]", ["A [b][i][x]Deep nested[/x][/i][/b]"],[2]],
-]
-#func test_can_split_nodes_into_wtv(params=use_parameters(test_cases)):
 func test_linear_children():
 	var tree := BVNInternal_BBCodeParser.parse("foo [b]bar[/b] baz")
 	assert_eq_deep(tree,
@@ -32,6 +24,40 @@ func test_linear_children():
 			{
 				"tag": "text",
 				"value": " baz"
+			}
+		]
+	})
+	
+func test_attributes():
+	var tree := BVNInternal_BBCodeParser.parse("""my [size=24 word=big website=http://www.google.com name="Mr Nose" address='Single Quote St.']big[/size] boy""")
+	assert_eq_deep(tree,
+	{
+		"tag": "root",
+		"attr": "",
+		"children": [
+			{
+				"tag": "text",
+				"value": "my "
+			},
+			{
+				"tag": "size",
+				"attr": {
+					"size":"24",
+					"word":"big",
+					"name": "Mr Nose",
+					"address": "Single Quote St.",
+					"website": "http://www.google.com"
+				},
+				"children": [
+					{
+						"tag": "text",
+						"value": "big"
+					}
+				]
+			},
+			{
+				"tag": "text",
+				"value": " boy"
 			}
 		]
 	})
