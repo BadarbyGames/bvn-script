@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dqkdhqy74804t"]
+[gd_scene load_steps=28 format=3 uid="uid://dqkdhqy74804t"]
 
 [ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_3v2nj"]
 [ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="1_oxtqp"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://by0qal8whushg" path="res://addons/bvn-script/models/bvn_character_sheet.gd" id="9_7agit"]
 [ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
 [ext_resource type="Script" uid="uid://c58pwovtchj5g" path="res://addons/bvn-script/models/bvn_visual_novel.gd" id="10_cwugk"]
+[ext_resource type="Script" uid="uid://wppdl4rhaako" path="res://addons/bvn-script/nodes/control/modal/bvn_gui_action_hotspot.gd" id="10_j8ty8"]
 [ext_resource type="AudioStream" uid="uid://cswwbvy04su8b" path="res://addons/bvn-script/editor_tab/wizard/template_assets/guitar.ogg" id="10_oeejf"]
 [ext_resource type="Texture2D" uid="uid://l25asijy8cyi" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg" id="10_ogexa"]
 [ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
@@ -215,6 +216,14 @@ text = "Hi, my name is Bivini! So [b]excited[/b] to meet you ~"
 fit_content = true
 script = ExtResource("7_fybqi")
 metadata/_custom_type_script = "uid://bta4kxdel1ks7"
+
+[node name="BVN_GuiActionHotspot" type="Button" parent="Main Menu/GUI/MarginContainer"]
+modulate = Color(1, 0.003, 0.279, 1)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "On click - next instruction"
+script = ExtResource("10_j8ty8")
+metadata/_custom_type_script = "uid://wppdl4rhaako"
 
 [node name="Mini Games" type="Node" parent="."]
 script = ExtResource("3_x3un8")

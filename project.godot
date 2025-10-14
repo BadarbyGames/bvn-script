@@ -13,7 +13,7 @@ config_version=5
 setup/data_folder="res://data"
 setup/audio_folder="res://assets"
 dialogue/text_speed=55
-debug/hotspots_visible=false
+debug/hotspots_visible=true
 debug/last_edited_engine="res://addons/bvn-script/editor_tab/wizard/template/bvni_novel_template.tscn"
 debug/add_child_mode=1
 

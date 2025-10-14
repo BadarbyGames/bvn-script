@@ -151,7 +151,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 	return errors
 	
+var has_started := false
 func start_visual_novel():
+	has_started = true
 	var scene:BVN_Scene = null
 	#region FROM LOAD REQUEST
 	if scene_service.scene_context:
@@ -182,7 +184,12 @@ func run_scene(scene:BVN_Scene):
 	next()
 
 func next(next_node:Bvn_AstNode = null):
-	if lock_service.is_locked: return
+	if (
+		lock_service.is_locked or 
+		(!Engine.is_editor_hint() and !has_started)
+	): 
+		print("@@IGNORED")
+		return
 	
 	var prev_node := context.current_node # Just storing for debugging reasons
 	context.current_node = next_node if next_node else context.current_node.get_next_node()
