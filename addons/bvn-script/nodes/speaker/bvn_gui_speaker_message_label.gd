@@ -13,10 +13,11 @@ var speed_msec:int = 0: # No delay
 		speed_msec = v
 		if text_synchronizer:
 			text_synchronizer.speed_msec = speed_msec
-
+			
 var text_synchronizer:BVN_SynchronizedTextVM
 func _init() -> void:
 	tree_entered.connect(func ():
+		bbcode_enabled = true
 		text_synchronizer = BVN_SynchronizedTextVM.new()
 		text_synchronizer.target_node = self
 		text_synchronizer.sync_mode = BVN_SynchronizedTextVM.MODE_SPEAKER_MESSAGE

@@ -60,6 +60,22 @@ static func toast_audio(text:String, config:Dictionary = {}) -> BVNInternal_Noti
 	
 	badge.start(config.audio_player)
 	return badge
+	
+static func toast_lock(text:String, config:Dictionary = {}) -> BVNInternal_NotifBadgeLock:
+	var icon:Texture2D = config.get("icon",null)
+	var packed_scene := get_toast_packed_scene(BVNInternal_NotifBadgeLock)
+	var badge:BVNInternal_NotifBadgeLock = packed_scene.instantiate()
+	container.add_child(badge)
+	
+	badge.button.text = str("🔐 Unlock [%s]" % text)
+	if icon:
+		badge.button.icon = icon
+		
+	container.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	container.position -= Vector2(20,20)
+	
+	badge.start(config.source)
+	return badge
 
 
 static func get_toast_packed_scene(script:Script) -> PackedScene:

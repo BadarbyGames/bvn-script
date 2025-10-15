@@ -54,24 +54,36 @@ func find_by_scene_path(scene_path:String):
 var scene_history:Array[Node] = []
 func toggle_scene(scene_or_node:Node):
 	var visited := {}
-	var hidden_node_names :Array[String]
+	var hidden_node_names :Array[String] = []
+	
+	_toggle_scene(scene_or_node, true)
+	visited[scene_or_node] = true
+	
 	for scene_source in [scenes,scene_history]:
 		for other_scene in scene_source:
 			if visited.has(other_scene): continue
 			visited[other_scene] = true
 			
-			var is_visible = other_scene == scene_or_node
-			if other_scene.visible != is_visible:
-				other_scene.set_process(is_visible)
-				other_scene.set_physics_process(is_visible)
-				other_scene.visible = is_visible
-				if !is_visible:
+			if other_scene.visible != false:
+				_toggle_scene(other_scene, false)
+				
+				 # hidden_node_names is only used in the editor
+				if Engine.is_editor_hint():
 					hidden_node_names.append(other_scene.name)
 
-	if Engine.is_editor_hint(): # Don't fire if editor is just loading	
+	if Engine.is_editor_hint(): 
 		BVNInternal_Notif.toast("'%s' activated" % scene_or_node.name)
 		if hidden_node_names:
 			BVNInternal_Notif.toast("'%s' is hidden" % ",".join(hidden_node_names))
+			
+func _toggle_scene(node:Node, is_visible:bool):
+	node.set_process(is_visible)
+	node.set_physics_process(is_visible)
+	node.visible = is_visible
+	
+	# Canvas_Layer has a seperate control, so we also toggle that
+	for canvas_layer:CanvasLayer in BdbSelect.children_by_type_recursive(node, CanvasLayer):
+		canvas_layer.visible = is_visible
 
 func push_scene(scene_or_node:Node):
 	scene_history.append(scene_or_node)

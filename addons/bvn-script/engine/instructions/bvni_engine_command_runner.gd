@@ -23,13 +23,13 @@ var rx_rm_gt := {
 	"replacement": "",
 }
 
-
 var base_instance:CmdContext
 var visual_novel:BVN_VisualNovel
 var expression_var_names :
 	get: return api_directory.keys()
 
 var api_directory:Dictionary[String, Node] = {
+		"engine":  BVNInternal_CmdEngineApi.new(),
 		"audio":  BVNInternal_CmdAudioApi.new(),
 		"vars": BVNInternal_CmdVarsApi.new(),
 		"node": BVNInternal_CmdNodeApi.new(),

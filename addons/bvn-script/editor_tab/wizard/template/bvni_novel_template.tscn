@@ -1,45 +1,25 @@
-[gd_scene load_steps=28 format=3 uid="uid://dqkdhqy74804t"]
+[gd_scene load_steps=27 format=3 uid="uid://dqkdhqy74804t"]
 
 [ext_resource type="Script" uid="uid://66bfvkefkbhb" path="res://addons/bvn-script/nodes/control/action-buttons/bvn_load_button.gd" id="1_3v2nj"]
 [ext_resource type="Script" uid="uid://bwajhb5p1f2b" path="res://addons/bvn-script/engine/bvn_variables.gd" id="1_oxtqp"]
 [ext_resource type="Script" uid="uid://dvmygi75fskfb" path="res://addons/bvn-script/engine/bvn_engine.gd" id="2_4htiu"]
-[ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="2_mschf"]
 [ext_resource type="Script" uid="uid://db0ovr2hivbar" path="res://addons/bvn-script/engine/variables/bvn_var_number.gd" id="3_5v76j"]
 [ext_resource type="AudioStream" uid="uid://d3o2qioecjpay" path="res://addons/bvn-script/editor_tab/wizard/template_assets/menu.ogg" id="3_mschf"]
 [ext_resource type="Script" uid="uid://bn5m0x4p12ovy" path="res://addons/bvn-script/models/bvn_scene_set.gd" id="3_nvh8d"]
 [ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="3_x3un8"]
 [ext_resource type="Script" uid="uid://c60r2udmkdqps" path="res://addons/bvn-script/models/bvn_scene.gd" id="4_5v76j"]
 [ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="5_6a6jl"]
+[ext_resource type="Theme" uid="uid://byjv2gevynhhy" path="res://addons/bvn-script/editor_tab/wizard/template_assets/sample-theme.tres" id="5_j8ty8"]
 [ext_resource type="Script" uid="uid://bta4kxdel1ks7" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_message_label.gd" id="7_fybqi"]
 [ext_resource type="Script" uid="uid://dufv56y535c0d" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_bleeps.gd" id="8_oeejf"]
 [ext_resource type="Script" uid="uid://by0qal8whushg" path="res://addons/bvn-script/models/bvn_character_sheet.gd" id="9_7agit"]
+[ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="9_j8ty8"]
 [ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
 [ext_resource type="Script" uid="uid://c58pwovtchj5g" path="res://addons/bvn-script/models/bvn_visual_novel.gd" id="10_cwugk"]
 [ext_resource type="Script" uid="uid://wppdl4rhaako" path="res://addons/bvn-script/nodes/control/modal/bvn_gui_action_hotspot.gd" id="10_j8ty8"]
 [ext_resource type="Texture2D" uid="uid://l25asijy8cyi" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg" id="10_ogexa"]
 [ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
 [ext_resource type="AudioStream" uid="uid://kdtf3vbnig3s" path="res://addons/bvn-script/editor_tab/wizard/template_assets/bleep001.ogg" id="12_sdoxj"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ogexa"]
-bg_color = Color(0.27450982, 0.46666667, 0.74509805, 1)
-border_width_left = 12
-border_width_top = 12
-border_width_right = 12
-border_width_bottom = 12
-border_color = Color(0.21568628, 0.21960784, 0.2627451, 1)
-corner_radius_top_left = 12
-corner_radius_bottom_right = 12
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fybqi"]
-bg_color = Color(0.16470589, 0.16470589, 0.16470589, 0.7411765)
-
-[sub_resource type="Theme" id="Theme_mschf"]
-Button/colors/font_color = Color(1, 1, 1, 1)
-Button/font_sizes/font_size = 28
-Button/styles/disabled = null
-Button/styles/normal = SubResource("StyleBoxFlat_ogexa")
-SpeakerBox/base_type = &"Panel"
-SpeakerBox/styles/panel = SubResource("StyleBoxFlat_fybqi")
 
 [sub_resource type="LabelSettings" id="LabelSettings_ogexa"]
 font_size = 120
@@ -68,13 +48,15 @@ metadata/_custom_type_script = "uid://c58pwovtchj5g"
 [sub_resource type="Resource" id="Resource_s37ku"]
 script = ExtResource("5_6a6jl")
 scene_script = "# Show the man chat gui
-> %GUI.show()
-Bivian: Hi, my name is Bivian! So [shake rate=20.0 level=5 connected=1]excited[/shake] to meet you ~
-Bivian:
-	This project is one of the ways you can setup an entire BVN project.
-	Everything is meant to be used with regular godot nodes!
-# Plays an aduio file from the folder set in the configuration wizard
-> audio.play(\"guitar.ogg\")"
+Bivian: What do you want to learn about today?
+> lock(\"unique_key\")"
+
+[sub_resource type="Resource" id="Resource_j8ty8"]
+script = ExtResource("5_6a6jl")
+scene_script = "# Show the man chat gui
+Bivian: What do you want to learn about today?
+# The buttons will send an unlock once the user has clicked them
+> engine.lock(\"with_unique_key\")"
 
 [node name="BVN Novel Template" type="Node2D"]
 
@@ -103,6 +85,7 @@ script = ExtResource("3_x3un8")
 metadata/_custom_type_script = "uid://b7qwe44ascmiv"
 
 [node name="Main Menu" type="Control" parent="Main Menu/Menu Items"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,7 +93,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = SubResource("Theme_mschf")
+theme = ExtResource("5_j8ty8")
 
 [node name="Scene" type="Node2D" parent="Main Menu/Menu Items/Main Menu"]
 
@@ -144,7 +127,7 @@ script = ExtResource("1_3v2nj")
 metadata/_custom_type_script = "uid://66bfvkefkbhb"
 
 [node name="INTERNAL BVN_ButtonLoadSessionVM" type="Node" parent="Main Menu/Menu Items/Main Menu/BVN_LoadButton" node_paths=PackedStringArray("target_node")]
-script = ExtResource("2_mschf")
+script = ExtResource("9_j8ty8")
 target_node = NodePath("..")
 
 [node name="Start Demo" type="Button" parent="Main Menu/Menu Items/Main Menu"]
@@ -184,7 +167,7 @@ anchor_bottom = 1.0
 offset_top = 460.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_mschf")
+theme = ExtResource("5_j8ty8")
 
 [node name="MarginContainer" type="MarginContainer" parent="Main Menu/GUI"]
 layout_mode = 1
@@ -218,7 +201,7 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme = SubResource("Theme_sdoxj")
 bbcode_enabled = true
-text = "Hi, my name is Bivian! So [shake rate=20.0 level=5 connected=1]excited to meet you ~"
+text = "What do you want to learn about today?"
 fit_content = true
 script = ExtResource("7_fybqi")
 metadata/_custom_type_script = "uid://bta4kxdel1ks7"
@@ -260,26 +243,88 @@ metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 script = ExtResource("3_nvh8d")
 metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 
-[node name="BVN_Scene" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
+[node name="Scene 1" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
 visible = false
 script = ExtResource("4_5v76j")
 scene_data = SubResource("Resource_s37ku")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
 
-[node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+[node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 1"]
 position = Vector2(613, 206.99998)
 scale = Vector2(1.4718155, 1.4718155)
 texture = ExtResource("10_ogexa")
 flip_h = true
 
-[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 1"]
 position = Vector2(223, 485)
 texture = ExtResource("10_7aocb")
 flip_h = true
 
-[node name="Boy" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/BVN_Scene"]
+[node name="Boy" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 1"]
 visible = false
 position = Vector2(881, 399)
 texture = ExtResource("11_0fssw")
+
+[node name="Scene 2" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
+script = ExtResource("4_5v76j")
+scene_data = SubResource("Resource_j8ty8")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 2"]
+position = Vector2(613, 206.99998)
+scale = Vector2(1.4718155, 1.4718155)
+texture = ExtResource("10_ogexa")
+flip_h = true
+
+[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 2"]
+position = Vector2(223, 485)
+texture = ExtResource("10_7aocb")
+flip_h = true
+
+[node name="Boy" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 2"]
+visible = false
+position = Vector2(881, 399)
+texture = ExtResource("11_0fssw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="BVN_Engine/Story Structure/Chapters/Scene 2"]
+
+[node name="MarginContainer" type="MarginContainer" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -306.0
+offset_bottom = 436.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 12
+
+[node name="Control" type="VBoxContainer" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer/MarginContainer"]
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+theme = ExtResource("5_j8ty8")
+theme_override_constants/separation = 18
+
+[node name="Learn - Concepts" type="Button" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer/MarginContainer/Control"]
+layout_mode = 2
+text = "Concepts"
+
+[node name="Learn - Scenes2" type="Button" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer/MarginContainer/Control"]
+layout_mode = 2
+text = "Scenes"
+
+[node name="Learn - Script" type="Button" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer/MarginContainer/Control"]
+layout_mode = 2
+text = "Scripting"
+
+[node name="Learn - Variables" type="Button" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer/MarginContainer/Control"]
+layout_mode = 2
+text = "Variables"
+
+[node name="Learn - Nodes" type="Button" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer/MarginContainer/Control"]
+layout_mode = 2
+text = "Utility Nodes"
 
 [connection signal="pressed" from="Main Menu/Menu Items/Main Menu/Start Demo" to="BVN_Engine" method="start_visual_novel"]

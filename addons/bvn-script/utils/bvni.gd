@@ -1,6 +1,10 @@
 ## Bunch of utility shit
 class_name BVNInternal
 
+static var is_editor_mode:
+	get: return is_editor_mode or Engine.is_editor_hint()
+	set(v): is_editor_mode = v
+
 ## Returns res://adons/bvn-script or wherever the
 ## Plugin is saved at
 static func get_plugin_path() -> String:
