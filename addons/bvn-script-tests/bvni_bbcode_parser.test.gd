@@ -27,9 +27,37 @@ func test_linear_children():
 			}
 		]
 	})
+
+func test_attrib_basic():
+	var tree := BVNInternal_BBCodeParser.parse("""Basic [shake rate=20.0 level=5]Inner[/shake]""") 
+	assert_eq_deep(tree,
+	{
+		"tag": "root",
+		"attr": "",
+		"children": [
+			{
+				"tag": "text",
+				"value": "Basic "
+			},
+			{
+				"tag": "shake",
+				"attr": {
+					"rate":"20.0",
+					"level":"5"
+				},
+				"children": [
+					{
+						"tag": "text",
+						"value": "Inner"
+					}
+				]
+			}
+		]
+	})
+
 	
-func test_attributes():
-	var tree := BVNInternal_BBCodeParser.parse("""my [size=24 word=big website=http://www.google.com name="Mr Nose" address='Single Quote St.']big[/size] boy""")
+func test_attrib_self_applied():
+	var tree := BVNInternal_BBCodeParser.parse("""my [size=24 float=2.0 word=big website=http://www.google.com name="Mr Nose" address='Single Quote St.']big[/size] boy""")
 	assert_eq_deep(tree,
 	{
 		"tag": "root",
@@ -43,6 +71,7 @@ func test_attributes():
 				"tag": "size",
 				"attr": {
 					"size":"24",
+					"float":"2.0",
 					"word":"big",
 					"name": "Mr Nose",
 					"address": "Single Quote St.",

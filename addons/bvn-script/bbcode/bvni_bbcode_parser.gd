@@ -1,10 +1,11 @@
 extends RefCounted
 
 class_name BVNInternal_BBCodeParser
-
+#Basic [shake connected=1]Inner[/shake]
 static func parse(text: String) -> Dictionary:
 	var tokens = RegEx.create_from_string(
-		r"\[/?(?<tag>[a-zA-Z0-9]+)(?:=[^\]]+)?(?:\s*\w+=\w+)*\]"
+		#r"\[/?(?<tag>[a-zA-Z0-9]+)(?:=[^\]]+)?(?:\s*\w+=\w+)*\]"
+		r"\[/?(?<tag>[a-zA-Z0-9]+)(?:=[^\]]+)?(?:\s*\w+=[^\[]+)*\]"
 	)
 	
 	var attr_extract_rx = RegEx.create_from_string(
@@ -16,11 +17,13 @@ static func parse(text: String) -> Dictionary:
 	var last_pos = 0
 
 	for m in tokens.search_all(text):
+		var token_start :=  m.get_start()
 		# 1. Add plain text before this tag
-		if m.get_start() > last_pos:
+		if token_start > last_pos:
+			var value :=  text.substr(last_pos, token_start - last_pos)
 			stack[-1]["children"].append({
 				"tag": "text",
-				"value": text.substr(last_pos, m.get_start() - last_pos)
+				"value": text.substr(last_pos, token_start - last_pos)
 			})
 
 		var tag_text = m.get_string()

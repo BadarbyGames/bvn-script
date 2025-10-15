@@ -87,15 +87,15 @@ marie: I'm [b]a little [i]teapot[/i] short and[/b] stout.\
 	assert_text_yields(1, "I'm [b]a little [i]teapot[/i] [/b]")
 	assert_text_yields(9, "I'm [b]a little [i]teapot[/i] short and[/b]")
 	assert_text_yields(6, "I'm [b]a little [i]teapot[/i] short and[/b] stout")
-	
+
 func test_with_attributes():
 	var ast_node:= parser.parse_bvn_script(
 """\
-mei: [size=24]hi[/size]
+mei: Hi [shake rate=20.0 level=5 connected=1]excited[/shake] to meet you ~
 """	)
 	runner.load_ast_node(ast_node.children[0], {})
-	assert_text_yields(1, """[size="24"]h[/size]""") 
-	assert_text_yields(2, """[size="24"]hi[/size]""") 
+	assert_text_yields(3, """Hi""") 
+	assert_text_yields(1, """Hi [shake rate=20.0 level=5 connected=1]e[/shake]""") 
 
 func assert_text_yields(n:int, expected_text:String):
 	move_x_times(n)

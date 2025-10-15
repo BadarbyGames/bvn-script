@@ -69,7 +69,7 @@ metadata/_custom_type_script = "uid://c58pwovtchj5g"
 script = ExtResource("5_6a6jl")
 scene_script = "# Show the man chat gui
 > %GUI.show()
-Bivian: Hi, my name is Bivian! So [b]excited[/b] to meet you ~
+Bivian: Hi, my name is Bivian! So [shake rate=20.0 level=5 connected=1]excited[/shake] to meet you ~
 Bivian:
 	This project is one of the ways you can setup an entire BVN project.
 	Everything is meant to be used with regular godot nodes!
@@ -177,7 +177,6 @@ label_settings = SubResource("LabelSettings_ogexa")
 
 [node name="GUI" type="Control" parent="Main Menu"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -219,7 +218,7 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme = SubResource("Theme_sdoxj")
 bbcode_enabled = true
-text = "Hi, my name is Bivian! So [b]excited[/b] to meet you ~"
+text = "Hi, my name is Bivian! So [shake rate=20.0 level=5 connected=1]excited to meet you ~"
 fit_content = true
 script = ExtResource("7_fybqi")
 metadata/_custom_type_script = "uid://bta4kxdel1ks7"
