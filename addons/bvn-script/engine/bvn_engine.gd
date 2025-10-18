@@ -188,7 +188,6 @@ func next(next_node:Bvn_AstNode = null):
 		lock_service.is_locked or 
 		(!Engine.is_editor_hint() and !has_started)
 	): 
-		print("@@IGNORED")
 		return
 	
 	var prev_node := context.current_node # Just storing for debugging reasons
@@ -213,7 +212,7 @@ enum IF_ELSE_STATE {
 	SKIPPED = 2, 
 }
 
-func execute_bvn_instruction(ast_node:Bvn_AstNode, vars:Dictionary):
+func execute_bvn_instruction(ast_node:Bvn_AstNode, vars:Dictionary = {}):
 	var is_run_in_game = context # context gets created on PLAY only
 				
 	match ast_node.type:

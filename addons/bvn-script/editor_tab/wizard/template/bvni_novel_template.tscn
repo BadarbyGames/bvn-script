@@ -13,13 +13,13 @@
 [ext_resource type="Script" uid="uid://bta4kxdel1ks7" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_message_label.gd" id="7_fybqi"]
 [ext_resource type="Script" uid="uid://dufv56y535c0d" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_bleeps.gd" id="8_oeejf"]
 [ext_resource type="Script" uid="uid://by0qal8whushg" path="res://addons/bvn-script/models/bvn_character_sheet.gd" id="9_7agit"]
-[ext_resource type="Script" uid="uid://cwjbd2t6k8hdj" path="res://addons/bvn-script/nodes/control/action-buttons/vm/bvn_button_load_session_vm.gd" id="9_j8ty8"]
 [ext_resource type="Texture2D" uid="uid://ccchsjfdkkaka" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png" id="10_7aocb"]
 [ext_resource type="Script" uid="uid://c58pwovtchj5g" path="res://addons/bvn-script/models/bvn_visual_novel.gd" id="10_cwugk"]
 [ext_resource type="Script" uid="uid://wppdl4rhaako" path="res://addons/bvn-script/nodes/control/modal/bvn_gui_action_hotspot.gd" id="10_j8ty8"]
 [ext_resource type="Texture2D" uid="uid://l25asijy8cyi" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-bg.jpg" id="10_ogexa"]
 [ext_resource type="Texture2D" uid="uid://bh2uck7yxacg3" path="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-boy-16.png" id="11_0fssw"]
 [ext_resource type="AudioStream" uid="uid://kdtf3vbnig3s" path="res://addons/bvn-script/editor_tab/wizard/template_assets/bleep001.ogg" id="12_sdoxj"]
+[ext_resource type="Script" uid="uid://bc80o04hyeywc" path="res://addons/bvn-script/nodes/bvn_command_node.gd" id="20_j8ty8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ogexa"]
 font_size = 120
@@ -45,11 +45,14 @@ script = ExtResource("10_cwugk")
 characters = Array[ExtResource("9_7agit")]([SubResource("Resource_oeejf")])
 metadata/_custom_type_script = "uid://c58pwovtchj5g"
 
-[sub_resource type="Resource" id="Resource_s37ku"]
+[sub_resource type="Resource" id="Resource_fhyrf"]
 script = ExtResource("5_6a6jl")
-scene_script = "# Show the man chat gui
-Bivian: What do you want to learn about today?
-> lock(\"unique_key\")"
+scene_script = "# Control a node in the tree
+> %GUI.show()
+> audio.play(\"guitar.ogg\")
+Bivian: 
+	Hi there! My Name is Bivian. 
+	I'm so [shake rate=20.0 level=5 connected=1]excited[/shake] to have you here!"
 
 [sub_resource type="Resource" id="Resource_j8ty8"]
 script = ExtResource("5_6a6jl")
@@ -59,6 +62,11 @@ Bivian: What do you want to learn about today?
 > engine.lock(\"with_unique_key\")"
 
 [node name="BVN Novel Template" type="Node2D"]
+
+[node name="BVN_CommandNode" type="Node" parent="."]
+script = ExtResource("20_j8ty8")
+commands = "> audio.play(\"guitar.ogg\")"
+metadata/_custom_type_script = "uid://bc80o04hyeywc"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(581, 313)
@@ -85,7 +93,6 @@ script = ExtResource("3_x3un8")
 metadata/_custom_type_script = "uid://b7qwe44ascmiv"
 
 [node name="Main Menu" type="Control" parent="Main Menu/Menu Items"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,10 +133,6 @@ text = "Load Session"
 script = ExtResource("1_3v2nj")
 metadata/_custom_type_script = "uid://66bfvkefkbhb"
 
-[node name="INTERNAL BVN_ButtonLoadSessionVM" type="Node" parent="Main Menu/Menu Items/Main Menu/BVN_LoadButton" node_paths=PackedStringArray("target_node")]
-script = ExtResource("9_j8ty8")
-target_node = NodePath("..")
-
 [node name="Start Demo" type="Button" parent="Main Menu/Menu Items/Main Menu"]
 layout_mode = 1
 anchors_preset = 3
@@ -160,6 +163,7 @@ label_settings = SubResource("LabelSettings_ogexa")
 
 [node name="GUI" type="Control" parent="Main Menu"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -246,7 +250,7 @@ metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 [node name="Scene 1" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
 visible = false
 script = ExtResource("4_5v76j")
-scene_data = SubResource("Resource_s37ku")
+scene_data = SubResource("Resource_fhyrf")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
 
 [node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapters/Scene 1"]
@@ -266,6 +270,7 @@ position = Vector2(881, 399)
 texture = ExtResource("11_0fssw")
 
 [node name="Scene 2" type="Node2D" parent="BVN_Engine/Story Structure/Chapters"]
+visible = false
 script = ExtResource("4_5v76j")
 scene_data = SubResource("Resource_j8ty8")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
@@ -287,6 +292,7 @@ position = Vector2(881, 399)
 texture = ExtResource("11_0fssw")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="BVN_Engine/Story Structure/Chapters/Scene 2"]
+visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="BVN_Engine/Story Structure/Chapters/Scene 2/CanvasLayer"]
 anchors_preset = 1
