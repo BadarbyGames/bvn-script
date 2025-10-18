@@ -1,4 +1,4 @@
-class_name BVN_Settings
+class_name BVN_ProjectSettings
 
 static var settings_global_override:Dictionary[String,Variant] = {}
 
@@ -11,17 +11,17 @@ static func _save(prop_name:String, new_value):
 	ProjectSettings.set_setting(str("BVN/",prop_name), new_value)
 	ProjectSettings.save() 
 	
-static var setup_data_folder: String:
-	get: return _load("setup/data_folder", "")
-	set(v): _save("setup/data_folder", v)
-	
-static var setup_audio_folder: String:
-	get: return _load("setup/audio_folder", "")
-	set(v): _save("setup/audio_folder", v)
-	
-static var setup_images_folder: String:
-	get: return _load("setup/images_folder", "")
-	set(v): _save("setup/images_folder", v)
+#static var setup_data_folder: String:
+	#get: return _load("setup/data_folder", "")
+	#set(v): _save("setup/data_folder", v)
+	#
+#static var setup_audio_folder: String:
+	#get: return _load("setup/audio_folder", "")
+	#set(v): _save("setup/audio_folder", v)
+	#
+#static var setup_images_folder: String:
+	#get: return _load("setup/images_folder", "")
+	#set(v): _save("setup/images_folder", v)
 
 static var last_edited_engine: String:
 	get: return _load("debug/last_edited_engine", "")

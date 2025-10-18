@@ -1,4 +1,4 @@
-@icon("../../icons/boolean.svg")
+@icon("../../../icons/boolean.svg")
 @tool
 extends BVN_Var
 

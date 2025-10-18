@@ -95,7 +95,7 @@ mei: Hi [shake rate=20.0 level=5 connected=1]excited[/shake] to meet you ~
 """	)
 	runner.load_ast_node(ast_node.children[0], {})
 	assert_text_yields(3, """Hi""") 
-	assert_text_yields(1, """Hi [shake rate=20.0 level=5 connected=1]e[/shake]""") 
+	assert_text_yields(1, """Hi [shake rate="20.0" level="5" connected="1"]e[/shake]""") 
 
 func assert_text_yields(n:int, expected_text:String):
 	move_x_times(n)

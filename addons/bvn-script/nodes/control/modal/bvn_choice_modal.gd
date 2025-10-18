@@ -30,7 +30,7 @@ func _init() -> void:
 		)
 
 func force_update_options():
-	var ADD_CHILD_MODE:InternalMode = BVN_Settings.debug_add_child_mode
+	var ADD_CHILD_MODE:InternalMode = BVN_ProjectSettings.debug_add_child_mode
 	var new_owner = get_tree().edited_scene_root if Engine.is_editor_hint() else owner
 	if !theme:
 		theme = load(BVN_RootDir.get_dir() +  "/theme/bvn_default_theme.tres")

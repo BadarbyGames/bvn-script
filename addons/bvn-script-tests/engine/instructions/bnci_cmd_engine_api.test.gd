@@ -3,6 +3,7 @@ extends BVNInternal_GutTest
 var api :BVNInternal_CmdEngineApi 
 var engine:BVN_Engine
 func before_each():
+	clean_notifs()
 	api = add_child_autofree(BVNInternal_CmdEngineApi.new())
 	engine = add_bvn_engine_autofree().engine
 

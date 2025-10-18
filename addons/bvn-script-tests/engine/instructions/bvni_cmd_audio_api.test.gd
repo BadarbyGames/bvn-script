@@ -2,7 +2,9 @@ extends BVNInternal_GutTest
 
 var api :BVNInternal_CmdAudioApi 
 func before_each():
+	add_engine_settings_autofree()
 	api = add_child_autofree(BVNInternal_CmdAudioApi.new())
+	clean_notifs()
 
 func test_no_additional_garbage():
 	assert_cleanup_signal(BVNInternal_CmdAudioApi.new())

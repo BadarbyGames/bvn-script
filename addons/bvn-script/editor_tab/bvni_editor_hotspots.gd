@@ -12,10 +12,10 @@ func _exit_tree() -> void:
 	BVN_EventBus.on_editor_attached.disconnect(setup)
 	
 func setup():
-	toggle_button_text(BVN_Settings.debug_hotspots_visible)
+	toggle_button_text(BVN_ProjectSettings.debug_hotspots_visible)
 	hotspot_button.pressed.connect(func ():
-		var new_value := !BVN_Settings.debug_hotspots_visible
-		BVN_Settings.debug_hotspots_visible = new_value
+		var new_value := !BVN_ProjectSettings.debug_hotspots_visible
+		BVN_ProjectSettings.debug_hotspots_visible = new_value
 		toggle_hotspot_visibility(new_value)
 		toggle_button_text(new_value)
 		)

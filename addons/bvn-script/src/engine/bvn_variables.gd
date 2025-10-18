@@ -1,4 +1,4 @@
-@icon("../icons/database.svg")
+@icon("../../icons/database.svg")
 @tool
 extends BVN_Node2D
 

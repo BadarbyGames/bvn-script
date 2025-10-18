@@ -1,4 +1,4 @@
-@icon("../../icons/unknown.svg")
+@icon("../../../icons/unknown.svg")
 @tool
 extends BVN_Node
 

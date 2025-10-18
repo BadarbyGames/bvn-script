@@ -16,21 +16,6 @@ func watch_properties():
 	
 	const data_folder := "res://data"
 	const assets_folder := "res://assets"
-	
-	has_changes = has_changes or try_add_property("setup/data_folder", data_folder, {
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_DIR,
-	})
-	
-	has_changes = has_changes or try_add_property("setup/audio_folder", assets_folder, {
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_DIR,
-	})
-	
-	has_changes = has_changes or try_add_property("setup/audio_folder", assets_folder, {
-		"type": TYPE_STRING,
-		"hint": PROPERTY_HINT_DIR,
-	})
 
 	has_changes = has_changes or try_add_property("dialogue/text_speed", 55, {
 		"type": TYPE_INT,

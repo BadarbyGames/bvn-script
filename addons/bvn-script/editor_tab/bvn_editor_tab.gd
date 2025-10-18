@@ -61,8 +61,8 @@ func setup() -> void:
 	BVN_EventBus.on_editor_variable_rename.connect(_on_var_rename)
 	
 	
-	var is_old_project := BVN_Settings.last_edited_engine and \
-		FileAccess.file_exists(BVN_Settings.last_edited_engine)
+	var is_old_project := BVN_ProjectSettings.last_edited_engine and \
+		FileAccess.file_exists(BVN_ProjectSettings.last_edited_engine)
 	start_wizard.visible = !is_old_project
 
 	BVN_EventBus.on_editor_attached.emit()

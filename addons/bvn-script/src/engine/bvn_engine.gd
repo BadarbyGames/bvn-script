@@ -1,4 +1,4 @@
-@icon("../icons/bvn.svg")
+@icon("../../icons/bvn.svg")
 @tool
 extends BVN_SceneSet
 
@@ -53,12 +53,13 @@ const AST_TYPE_ELSE = Bvn_AstNode.TYPE_ELSE
 var service_node:Node
 
 var debouncers:Dictionary[String,BdbDebounce] = {}
+var settings:BVN_SettingsNode
 func _init() -> void:
 	tree_entered.connect(func ():
 		add_to_group(BVNInternal_Tags.ENGINE)
 		
 		if Engine.is_editor_hint():
-			BVN_Settings.last_edited_engine = EditorInterface.get_edited_scene_root().scene_file_path
+			BVN_ProjectSettings.last_edited_engine = EditorInterface.get_edited_scene_root().scene_file_path
 		
 		if service_node == null:
 			service_node = Node.new()
@@ -87,6 +88,10 @@ func _init() -> void:
 		if lock_service == null:
 			lock_service = BVNInternal_LockService.new()
 			service_node.add_child(lock_service, true,Node.INTERNAL_MODE_BACK) 
+			
+		## Do not hide this node, we want to surface it to the user.
+		settings = BVNInternal.ensure_child(self, BVN_SettingsNode, Node.INTERNAL_MODE_DISABLED)
+		settings.name = "Visual Novel Settings"
 		#endregion 
 		
 		#region 

@@ -9,7 +9,7 @@ const EDITOR_VISIBLE_COLOR = Color(1.0, 0.003, 0.279, 1.0)
 func _enter_tree() -> void:
 	add_to_group(BVNInternal_Tags.TOOL_HOTSPOT)
 	if Engine.is_editor_hint():
-		update_hotspot_visibility(BVN_Settings.debug_hotspots_visible)
+		update_hotspot_visibility(BVN_ProjectSettings.debug_hotspots_visible)
 	else:
 		update_hotspot_visibility(false)
 	update_gizmo_text()
