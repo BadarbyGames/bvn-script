@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ccchsjfdkkaka"
-path="res://.godot/imported/chat-gpt-girl-16.png-0d249d86bd65ffd8ceea3ce74164208d.ctex"
+path="res://.godot/imported/chat-gpt-girl-16.png-ce05e8a474f9b665ff1ac381e4cf0b6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/bvn-script/editor_tab/wizard/template_assets/chat-gpt-girl-16.png"
-dest_files=["res://.godot/imported/chat-gpt-girl-16.png-0d249d86bd65ffd8ceea3ce74164208d.ctex"]
+source_file="res://addons/bvn-script-sample-project/assets/chat-gpt-girl-16.png"
+dest_files=["res://.godot/imported/chat-gpt-girl-16.png-ce05e8a474f9b665ff1ac381e4cf0b6b.ctex"]
 
 [params]
 

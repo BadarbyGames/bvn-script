@@ -1,9 +1,9 @@
 class_name BVN_Settings
 
-static var settings_override:Dictionary[String,Variant] = {}
+static var settings_global_override:Dictionary[String,Variant] = {}
 
 static func _load(prop_name:String, defaultValue):
-	return  settings_override.get(
+	return  settings_global_override.get(
 		prop_name,
 		ProjectSettings.get_setting(str("BVN/",prop_name), defaultValue)
 	)

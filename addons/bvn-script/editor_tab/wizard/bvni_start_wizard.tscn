@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://mnsuuuymgf2h" path="res://addons/bvn-script/editor_tab/wizard/bvni_start_wizard.gd" id="1_y62uk"]
 [ext_resource type="Theme" uid="uid://d1n8i32whs4up" path="res://addons/bvn-script/theme/bvn_default_theme.tres" id="2_u87tp"]
 [ext_resource type="LabelSettings" uid="uid://bhce2x2yvspmq" path="res://addons/bvn-script/editor_tab/wizard/bvni_h1.tres" id="3_65m8m"]
-[ext_resource type="PackedScene" uid="uid://dqkdhqy74804t" path="res://addons/bvn-script/editor_tab/wizard/template/bvni_novel_template.tscn" id="3_y62uk"]
+[ext_resource type="PackedScene" uid="uid://dqkdhqy74804t" path="res://addons/bvn-script-sample-project/bvn_sample_project.tscn" id="3_y62uk"]
 [ext_resource type="LabelSettings" uid="uid://ck1dd5so5sce1" path="res://addons/bvn-script/editor_tab/wizard/bvni_h2.tres" id="4_2i3qq"]
 
 [node name="BvniStartWizard" type="PanelContainer" node_paths=PackedStringArray("diag_select_dir", "diag_inform", "data_line_edit", "audio_line_edit", "image_line_edit", "descrpt_label")]
@@ -131,21 +131,9 @@ editable = false
 context_menu_enabled = false
 emoji_menu_enabled = false
 
-[node name="HBoxContainer" type="MarginContainer" parent="MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-size_flags_vertical = 0
-
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/HBoxContainer/CenterContainer"]
-layout_mode = 2
-
-[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/HBoxContainer/CenterContainer/HBoxContainer"]
-layout_mode = 2
-text = "Generate Visual Novel Template Scene"
 
 [connection signal="canceled" from="SelectDirDialogue" to="." method="_on_select_dir_dialogue_canceled"]
 [connection signal="dir_selected" from="SelectDirDialogue" to="." method="_on_select_dir_dialogue_dir_selected"]
-[connection signal="pressed" from="MarginContainer/ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/HBoxContainer/CenterContainer/HBoxContainer/Button" to="." method="_generate_template"]

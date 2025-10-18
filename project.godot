@@ -14,7 +14,7 @@ setup/data_folder="res://data"
 setup/audio_folder="res://assets"
 dialogue/text_speed=55
 debug/hotspots_visible=false
-debug/last_edited_engine="res://addons/bvn-script/editor_tab/wizard/template/bvni_novel_template.tscn"
+debug/last_edited_engine="res://addons/bvn-script-sample-project/bvn_sample_project.tscn"
 debug/add_child_mode=1
 
 [application]

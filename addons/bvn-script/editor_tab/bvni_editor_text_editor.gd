@@ -37,8 +37,6 @@ func execute_line(line_index:int):
 	assert(edited_scene, "No Scene set.")
 	assert(edited_scene.scene_data, "Scene has missing scene_data")
 	
-	print("@@executing ",line_index)
-	
 	# Get all instructions
 	parsed_ast = parser.parse_bvn_script(text)
 	var ln_node := parsed_ast.find_node_by_line_index(line_index)
