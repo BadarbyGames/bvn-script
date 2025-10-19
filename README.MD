@@ -1,6 +1,8 @@
-## Starting from a new project
+# BVN Script
 
-```
-git remote add bvn git@github.com:BadarbyGames/bvn-script.git
-git subtree add --prefix=addons/bvn-script bvn master
-```
+![Screenshot of a Godot with BVN features.](./docs/screen-annotated-2.jpg)
+
+
+## Status
+
+`WIP`
