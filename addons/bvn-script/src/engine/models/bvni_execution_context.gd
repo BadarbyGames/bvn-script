@@ -3,4 +3,4 @@ class_name BVNInternal_SceneExecutionContext
 
 var node_data:Dictionary[Bvn_AstNode, Dictionary] = {}
 var current_node:Bvn_AstNode
-var scene:BVN_Scene
+var scene:BVN_Page

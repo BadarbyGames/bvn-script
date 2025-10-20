@@ -4,7 +4,7 @@ extends CodeEdit
 class_name BVNInternal_EditorTextEditor
 
 var counter:int = 5
-var edited_scene:BVN_Scene
+var edited_scene:BVN_Page
 var debounce_break_point:BdbDebounce
 var parser := BVN_ScriptParser.new()
 var parsed_ast:Bvn_AstNode
@@ -35,7 +35,7 @@ func execute_breakpoints_as_line(line_index:int):
 
 func execute_line(line_index:int):
 	assert(edited_scene, "No Scene set.")
-	assert(edited_scene.scene_data, "Scene has missing scene_data")
+	assert(edited_scene.page_data, "Scene has missing page_data")
 	
 	# Get all instructions
 	parsed_ast = parser.parse_bvn_script(text)

@@ -1,6 +1,6 @@
 @icon("../../icons/bvn.svg")
 @tool
-extends BVN_SceneSet
+extends BVN_Chapter
 
 class_name BVN_Engine
 
@@ -37,7 +37,7 @@ var speaker_runner:BVNInternal_SpeakerRunner
 
 var gui_orchestrator:BvnInternal_GuiOrchestrator 
 var session_service:BVNInternal_SessionService 
-var scene_service:BVNInernal_SceneService
+var managed_node_service:BVNInernal_ManagedNodeService
 var lock_service:BVNInternal_LockService
 #endregion
 
@@ -82,9 +82,9 @@ func _init() -> void:
 		if session_service == null:
 			session_service = BVNInternal_SessionService.new()
 			service_node.add_child(session_service, true,Node.INTERNAL_MODE_BACK)
-		if scene_service == null:
-			scene_service = BVNInernal_SceneService.new()
-			service_node.add_child(scene_service, true,Node.INTERNAL_MODE_BACK)
+		if managed_node_service == null:
+			managed_node_service = BVNInernal_ManagedNodeService.new()
+			service_node.add_child(managed_node_service, true,Node.INTERNAL_MODE_BACK)
 		if lock_service == null:
 			lock_service = BVNInternal_LockService.new()
 			service_node.add_child(lock_service, true,Node.INTERNAL_MODE_BACK) 
@@ -146,12 +146,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not(found_store) or found_store.size() != 1:
 		errors.append("Must have exactly one '%s' child" % (BVN_Variables as Script).get_global_name())
 		
-	var scene = BdbSelect.child_by_type(self, BVN_Scene)
-	var scene_set = BdbSelect.child_by_type(self, BVN_SceneSet)
-	if not(scene or scene_set):
+	var scene = BdbSelect.child_by_type(self, BVN_Page)
+	var chapter = BdbSelect.child_by_type(self, BVN_Chapter)
+	if not(scene or chapter):
 		errors.append("Must have atleast one '%s' or '%s' child" % [
-			(BVN_Scene as Script).get_global_name(),
-			(BVN_SceneSet as Script).get_global_name()
+			(BVN_Page as Script).get_global_name(),
+			(BVN_Chapter as Script).get_global_name()
 		])
 
 	return errors
@@ -159,33 +159,33 @@ func _get_configuration_warnings() -> PackedStringArray:
 var has_started := false
 func start_visual_novel():
 	has_started = true
-	var scene:BVN_Scene = null
+	var scene:BVN_Page = null
 	#region FROM LOAD REQUEST
-	if scene_service.scene_context:
-		scene = scene_service.scene_context.scene
+	if managed_node_service.scene_context:
+		scene = managed_node_service.scene_context.scene
 	#endregion
 		
 	#region NO STARTING
-	elif scene_service.scenes:
-		scene = BdbSelect.item_by_type(scene_service.scenes, BVN_Scene)
+	elif managed_node_service.scenes:
+		scene = BdbSelect.item_by_type(managed_node_service.scenes, BVN_Page)
 	#endregion
 	assert(scene, "Couldn't find a scene to use")
 	run_scene(scene)
 
 ## Context of the current running scene
 var context:BVNInternal_SceneExecutionContext
-func run_scene(scene:BVN_Scene):
-	context = scene_service.mk_scene_context()
+func run_scene(scene:BVN_Page):
+	context = managed_node_service.mk_scene_context()
 	
-	var script := scene.scene_data.scene_script
+	var script := scene.page_data.scene_script
 	assert(script, "'%s' has no script. Start writing one now" % scene.get_scene_path())
-	var root_node := script_parser.parse_bvn_script(scene.scene_data.scene_script)
+	var root_node := script_parser.parse_bvn_script(scene.page_data.scene_script)
 	
 	context.node_data = {}
 	context.scene = scene
 	context.current_node = root_node
 	
-	scene_service.push_scene(scene)
+	managed_node_service.push_scene(scene)
 	next()
 
 func next(next_node:Bvn_AstNode = null):
@@ -198,7 +198,7 @@ func next(next_node:Bvn_AstNode = null):
 	var prev_node := context.current_node # Just storing for debugging reasons
 	context.current_node = next_node if next_node else context.current_node.get_next_node()
 	if context.current_node == null:
-		var next_scene = BVN_EngineSelectors.find_next_scene(context.scene)
+		var next_scene = BVN_EngineSelectors.find_next_page(context.scene)
 		assert(next_scene, "No more scenes left!")
 		run_scene(next_scene)
 		return

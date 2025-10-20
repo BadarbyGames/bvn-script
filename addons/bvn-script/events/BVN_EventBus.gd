@@ -44,7 +44,7 @@ signal on_engine_demand_load(save_data: Dictionary)
 #region INTERNAL EDITOR SIGNALS - DO NOT USE
 signal on_editor_attached() # Run when setup is called. Sub components should listen to this instead
 signal on_editor_scene_change(scene_root:Node)
-signal on_editor_scene_inspect(scene:BVN_Scene)
+signal on_editor_scene_inspect(scene:BVN_Page)
 signal on_editor_variable_add(variable:BVN_Var)
 signal on_editor_variable_rm(variable:BVN_Var)
 signal on_editor_variable_rename(variable:BVN_Var, from:String, to:String)

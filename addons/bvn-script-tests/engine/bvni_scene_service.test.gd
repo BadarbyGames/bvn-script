@@ -2,10 +2,10 @@ extends BVNInternal_GutTest
 
 
 func test_cleans_signal_on_exit():
-	assert_cleanup_signal(BVNInernal_SceneService.new())
+	assert_cleanup_signal(BVNInernal_ManagedNodeService.new())
 
 func test_only_should_only_show_incomin_node():
-	add_child_autoqfree(BVNInernal_SceneService.new())
+	add_child_autoqfree(BVNInernal_ManagedNodeService.new())
 	var managed_nodes:BVN_ManagedNodes = add_child_autoqfree(BVN_ManagedNodes.new())
 	var child1:Node2D = Node2D.new()
 	var child2:Node2D = Node2D.new()
@@ -28,7 +28,7 @@ func test_only_should_only_show_incomin_node():
 	assert_true(child3.visible, "Newly - Added should be visible")
 
 func test_only_show_1_managed_node():
-	add_child_autoqfree(BVNInernal_SceneService.new())
+	add_child_autoqfree(BVNInernal_ManagedNodeService.new())
 	var managed_nodes:BVN_ManagedNodes = add_child_autoqfree(BVN_ManagedNodes.new())
 	var child1:Node2D = Node2D.new()
 	var child2:Node2D = Node2D.new()

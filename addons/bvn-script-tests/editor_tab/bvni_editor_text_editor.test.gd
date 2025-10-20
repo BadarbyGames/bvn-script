@@ -2,7 +2,7 @@ extends BVNInternal_GutTest
 
 var engine:BVN_Engine
 var visual_novel:BVN_VisualNovel
-var test_scene:BVN_Scene
+var test_scene:BVN_Page
 var variables:BVN_Variables
 func before_each():
 	visual_novel = BVN_VisualNovel.new()
@@ -19,8 +19,8 @@ func before_each():
 	variables = BVN_Variables.new()
 	engine.add_child(variables)
 	
-	test_scene = BVN_Scene.new()
-	test_scene.scene_data = BVN_SceneData.new()
+	test_scene = BVN_Page.new()
+	test_scene.page_data = BVN_PageData.new()
 	engine.add_child(test_scene)
 	#endregion
 

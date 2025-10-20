@@ -3,11 +3,11 @@
 extends BVN_ManagedNodes
 
 ## Like a folder for scenes.
-class_name BVN_SceneSet
+class_name BVN_Chapter
 
-var scene_parent:BVN_SceneSet:
+var scene_parent:BVN_Chapter:
 	get:
-		return BVN_EngineSelectors.find_bvn_scene_set_ancestor(self.get_parent())
+		return BVN_EngineSelectors.find_bvn_chapter_ancestor(self.get_parent())
 
 func get_scene_path():
 	var tmp := scene_parent

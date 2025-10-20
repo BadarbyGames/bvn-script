@@ -24,13 +24,13 @@ func test_save_vars():
 
 func test_save_scenes():
 	#region
-	var sample_scene_set :BVN_SceneSet = add_child_autoqfree(BVN_SceneSet.new())
-	sample_scene_set.name = "Chapter 20"
-	var sample_scene:BVN_Scene = BVN_Scene.new()
+	var sample_chapter :BVN_Chapter = add_child_autoqfree(BVN_Chapter.new())
+	sample_chapter.name = "Chapter 20"
+	var sample_scene:BVN_Page = BVN_Page.new()
 	sample_scene.name = "Scene 5"
-	sample_scene_set.add_child(sample_scene)
+	sample_chapter.add_child(sample_scene)
 	
-	var scene_svc:BVNInernal_SceneService = add_child_autoqfree(BVNInernal_SceneService.new())
+	var scene_svc:BVNInernal_ManagedNodeService = add_child_autoqfree(BVNInernal_ManagedNodeService.new())
 	var context := scene_svc.mk_scene_context()
 	context.scene = sample_scene
 	#endregion

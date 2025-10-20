@@ -13,13 +13,13 @@ var timer:Timer
 ## List of all variables to autocomplete to
 var variables_list :Array[BVN_Var]= []
 
-var edited_scene:BVN_Scene:
+var edited_scene:BVN_Page:
 	set(v):
 		edited_scene = v
 		text_editor.edited_scene = v
 			
 var is_editing_scene:
-	get: return edited_scene and edited_scene.scene_data
+	get: return edited_scene and edited_scene.page_data
 	
 #region TEMP SCAFFOLD - @TODO delete
 var parser := BVN_ScriptParser.new()
@@ -122,18 +122,18 @@ func _try_autocomplete():
 	
 	text_editor.update_code_completion_options(true)
 	
-func _on_inspect_scene(scene:BVN_Scene):
+func _on_inspect_scene(scene:BVN_Page):
 	_save_bvn_script() # save current script before moving on
 	
 	if scene:
 		scene_name.text = scene.get_scene_path()
 		edited_scene = scene
-		var scene_data := edited_scene.scene_data
-		if !scene_data:
-			edited_scene.scene_data = BVN_SceneData.new()
+		var page_data := edited_scene.page_data
+		if !page_data:
+			edited_scene.page_data = BVN_PageData.new()
 			get_tree().edited_scene_root.property_list_changed_notify()
 			
-		text_editor.text = edited_scene.scene_data.scene_script
+		text_editor.text = edited_scene.page_data.scene_script
 	else:
 		scene_name.text = "No BVN Scene Tree Selected"
 		edited_scene = null
@@ -142,7 +142,7 @@ func _on_inspect_scene(scene:BVN_Scene):
 func _save_bvn_script():
 	if !is_editing_scene: return
 	parsed_ast = parser.parse_bvn_script(text_editor.text)
-	edited_scene.scene_data.scene_script = text_editor.text.strip_edges()
+	edited_scene.page_data.scene_script = text_editor.text.strip_edges()
 	
 func _input(event: InputEvent) -> void:
 	if text_editor.has_focus() and event is InputEventMouseMotion:

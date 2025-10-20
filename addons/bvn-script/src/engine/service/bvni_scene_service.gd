@@ -1,7 +1,7 @@
 @tool
 extends Node
 
-class_name BVNInernal_SceneService
+class_name BVNInernal_ManagedNodeService
 
 var scenes:Array[Node]:
 	get:
@@ -48,7 +48,7 @@ func mk_scene_context() -> BVNInternal_SceneExecutionContext:
 	return scene_context
 
 func find_by_scene_path(scene_path:String):
-	for scene:BVN_Scene in scenes:
+	for scene:BVN_Page in scenes:
 		if scene.get_scene_path() == scene_path: return scene
 		
 var scene_history:Array[Node] = []
