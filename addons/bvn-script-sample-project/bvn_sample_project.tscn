@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://dqkdhqy74804t"]
+[gd_scene load_steps=27 format=3 uid="uid://dqkdhqy74804t"]
 
 [ext_resource type="Script" uid="uid://bc80o04hyeywc" path="res://addons/bvn-script/nodes/bvn_command_node.gd" id="1_sykxg"]
 [ext_resource type="AudioStream" uid="uid://kdtf3vbnig3s" path="res://addons/bvn-script-sample-project/assets/bleep001.ogg" id="2_kqk2m"]
 [ext_resource type="Script" uid="uid://dufv56y535c0d" path="res://addons/bvn-script/nodes/speaker/bvn_gui_speaker_bleeps.gd" id="3_3yf6i"]
+[ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="3_kqk2m"]
 [ext_resource type="AudioStream" uid="uid://d3o2qioecjpay" path="res://addons/bvn-script-sample-project/assets/menu.ogg" id="4_wl1b1"]
 [ext_resource type="Script" uid="uid://b7qwe44ascmiv" path="res://addons/bvn-script/nodes/bvn_managed_nodes.gd" id="5_ufsbq"]
 [ext_resource type="Theme" uid="uid://byjv2gevynhhy" path="res://addons/bvn-script-sample-project/assets/sample-theme.tres" id="6_xf8nr"]
@@ -18,8 +19,12 @@
 [ext_resource type="Script" uid="uid://db0ovr2hivbar" path="res://addons/bvn-script/src/engine/variables/bvn_var_number.gd" id="17_g3xg8"]
 [ext_resource type="Script" uid="uid://bn5m0x4p12ovy" path="res://addons/bvn-script/models/bvn_scene_set.gd" id="18_skcxn"]
 [ext_resource type="Script" uid="uid://c60r2udmkdqps" path="res://addons/bvn-script/models/bvn_scene.gd" id="19_3q81a"]
-[ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="20_cobvm"]
+[ext_resource type="Resource" uid="uid://cokojxg2ly85v" path="res://addons/bvn-script-sample-project/page1.tres" id="20_sykxg"]
+[ext_resource type="Resource" uid="uid://d34qjga4medvg" path="res://addons/bvn-script-sample-project/page2.tres" id="21_kqk2m"]
 [ext_resource type="Script" uid="uid://de35r104eas1k" path="res://addons/bvn-script/src/engine/service/bvn_settings_overrides_nodes.gd" id="22_kqk2m"]
+
+[sub_resource type="Resource" id="Resource_3yf6i"]
+script = ExtResource("3_kqk2m")
 
 [sub_resource type="LabelSettings" id="LabelSettings_ogexa"]
 font_size = 120
@@ -34,19 +39,8 @@ RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/font_sizes/bold_font_size = 32
 RichTextLabel/font_sizes/normal_font_size = 32
 
-[sub_resource type="Resource" id="Resource_kscan"]
-script = ExtResource("20_cobvm")
-scene_script = "> %GUI.show()
-> audio.play(\"guitar.ogg\")
-Bivian:
-	Hi there! My Name is Bivian.
-	I'm so [shake rate=20.0 level=5 connected=1]excited[/shake] to have you here!"
-
-[sub_resource type="Resource" id="Resource_sykxg"]
-script = ExtResource("20_cobvm")
-scene_script = "Bivian: What do you want to learn about today?
-# The buttons will send an unlock once the user has clicked them
-engine.lock(\\\"with_unique_key\\\")\""
+[sub_resource type="Resource" id="Resource_wl1b1"]
+script = ExtResource("3_kqk2m")
 
 [node name="BVN Novel Template" type="Node2D"]
 
@@ -54,6 +48,11 @@ engine.lock(\\\"with_unique_key\\\")\""
 script = ExtResource("1_sykxg")
 commands = "> audio.play(\"guitar.ogg\")"
 metadata/_custom_type_script = "uid://bc80o04hyeywc"
+
+[node name="BVN_Page" type="Node2D" parent="BVN_CommandNode"]
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_3yf6i")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(581, 313)
@@ -80,6 +79,7 @@ script = ExtResource("5_ufsbq")
 metadata/_custom_type_script = "uid://b7qwe44ascmiv"
 
 [node name="Main Menu" type="Control" parent="Main Menu/Menu Items"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,7 +154,6 @@ label_settings = SubResource("LabelSettings_ogexa")
 
 [node name="GUI" type="Control" parent="Main Menu"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -196,9 +195,8 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 theme = SubResource("Theme_sdoxj")
 bbcode_enabled = true
-text = "Hi there! My Name is Bivian. 
-I'm so [shake rate=\"20.0\" level=\"5\" connected=\"1\"]excited[/shake] to have you here!
-Can you lend me $200.0"
+text = "Hi there! My Name is Bivian.
+I'm so [shake rate=\"20.0\" level=\"5\" connected=\"1\"]excited[/shake] to have you here!"
 fit_content = true
 script = ExtResource("11_k6d4t")
 metadata/_custom_type_script = "uid://bta4kxdel1ks7"
@@ -246,44 +244,44 @@ metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 script = ExtResource("18_skcxn")
 metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
 
-[node name="Scene 1" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
-visible = false
+[node name="Page 1" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
 script = ExtResource("19_3q81a")
-page_data = SubResource("Resource_kscan")
+page_data = ExtResource("20_sykxg")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
 
-[node name="BG" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Scene 1"]
+[node name="BG" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Page 1"]
 position = Vector2(613, 206.99998)
 scale = Vector2(1.4718155, 1.4718155)
 texture = ExtResource("7_elxba")
 flip_h = true
 
-[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Scene 1"]
+[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Page 1"]
 position = Vector2(223, 485)
 texture = ExtResource("8_3th7j")
 flip_h = true
 
-[node name="Scene 2" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
+[node name="Page 2" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
 visible = false
 script = ExtResource("19_3q81a")
-page_data = SubResource("Resource_sykxg")
+page_data = ExtResource("21_kqk2m")
 metadata/_custom_type_script = "uid://c60r2udmkdqps"
+metadata/_edit_group_ = true
 
-[node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2"]
+[node name="ChatGptBg" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Page 2"]
 position = Vector2(613, 206.99998)
 scale = Vector2(1.4718155, 1.4718155)
 texture = ExtResource("7_elxba")
 flip_h = true
 
-[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2"]
+[node name="Bivini" type="Sprite2D" parent="BVN_Engine/Story Structure/Chapter 1/Page 2"]
 position = Vector2(223, 485)
 texture = ExtResource("8_3th7j")
 flip_h = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2"]
+[node name="CanvasLayer" type="CanvasLayer" parent="BVN_Engine/Story Structure/Chapter 1/Page 2"]
 visible = false
 
-[node name="MarginContainer" type="MarginContainer" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer"]
+[node name="MarginContainer" type="MarginContainer" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -296,30 +294,70 @@ theme_override_constants/margin_top = 48
 theme_override_constants/margin_right = 48
 theme_override_constants/margin_bottom = 12
 
-[node name="Control" type="VBoxContainer" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer/MarginContainer"]
+[node name="Control" type="VBoxContainer" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer/MarginContainer"]
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 theme = ExtResource("6_xf8nr")
 theme_override_constants/separation = 18
 
-[node name="Learn - Concepts" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer/MarginContainer/Control"]
+[node name="Learn - Concepts" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer/MarginContainer/Control"]
 layout_mode = 2
 text = "Concepts"
 
-[node name="Learn - Scenes2" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer/MarginContainer/Control"]
+[node name="Learn - Scenes2" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer/MarginContainer/Control"]
 layout_mode = 2
 text = "Scenes"
 
-[node name="Learn - Script" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer/MarginContainer/Control"]
+[node name="Learn - Script" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer/MarginContainer/Control"]
 layout_mode = 2
 text = "Scripting"
 
-[node name="Learn - Variables" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer/MarginContainer/Control"]
+[node name="Learn - Variables" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer/MarginContainer/Control"]
 layout_mode = 2
 text = "Variables"
 
-[node name="Learn - Nodes" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Scene 2/CanvasLayer/MarginContainer/Control"]
+[node name="Learn - Nodes" type="Button" parent="BVN_Engine/Story Structure/Chapter 1/Page 2/CanvasLayer/MarginContainer/Control"]
 layout_mode = 2
 text = "Utility Nodes"
+
+[node name="Page 3" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
+visible = false
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_wl1b1")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="Page 4" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
+visible = false
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_wl1b1")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="Page 5" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 1"]
+visible = false
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_wl1b1")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="Chapter 2" type="Node2D" parent="BVN_Engine/Story Structure"]
+script = ExtResource("18_skcxn")
+metadata/_custom_type_script = "uid://bn5m0x4p12ovy"
+
+[node name="Page 6" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 2"]
+visible = false
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_wl1b1")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="Page 7" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 2"]
+visible = false
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_wl1b1")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
+
+[node name="Page 8" type="Node2D" parent="BVN_Engine/Story Structure/Chapter 2"]
+visible = false
+script = ExtResource("19_3q81a")
+page_data = SubResource("Resource_wl1b1")
+metadata/_custom_type_script = "uid://c60r2udmkdqps"
 
 [connection signal="pressed" from="Main Menu/Menu Items/Main Menu/Start Demo" to="BVN_Engine" method="start_visual_novel"]

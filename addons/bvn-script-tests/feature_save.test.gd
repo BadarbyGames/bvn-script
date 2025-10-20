@@ -26,16 +26,16 @@ func test_save_scenes():
 	#region
 	var sample_chapter :BVN_Chapter = add_child_autoqfree(BVN_Chapter.new())
 	sample_chapter.name = "Chapter 20"
-	var sample_scene:BVN_Page = BVN_Page.new()
-	sample_scene.name = "Scene 5"
-	sample_chapter.add_child(sample_scene)
+	var sample_page:BVN_Page = BVN_Page.new()
+	sample_page.name = "Scene 5"
+	sample_chapter.add_child(sample_page)
 	
 	var scene_svc:BVNInernal_ManagedNodeService = add_child_autoqfree(BVNInernal_ManagedNodeService.new())
-	var context := scene_svc.mk_scene_context()
-	context.scene = sample_scene
+	var context := scene_svc.mk_page_context()
+	context.page = sample_page
 	#endregion
 	
 	BVN.save()
 	var result_data := save_svc.load_game()
-	var path = sample_scene.get_scene_path()
-	assert_eq(result_data.scene.scene_path, sample_scene.get_scene_path())
+	var path = sample_page.get_page_path()
+	assert_eq(result_data.page.page_path, sample_page.get_page_path())

@@ -126,7 +126,7 @@ func _on_inspect_scene(scene:BVN_Page):
 	_save_bvn_script() # save current script before moving on
 	
 	if scene:
-		scene_name.text = scene.get_scene_path()
+		scene_name.text = scene.get_page_path()
 		edited_scene = scene
 		var page_data := edited_scene.page_data
 		if !page_data:

@@ -146,9 +146,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if not(found_store) or found_store.size() != 1:
 		errors.append("Must have exactly one '%s' child" % (BVN_Variables as Script).get_global_name())
 		
-	var scene = BdbSelect.child_by_type(self, BVN_Page)
+	var page = BdbSelect.child_by_type(self, BVN_Page)
 	var chapter = BdbSelect.child_by_type(self, BVN_Chapter)
-	if not(scene or chapter):
+	if not(page or chapter):
 		errors.append("Must have atleast one '%s' or '%s' child" % [
 			(BVN_Page as Script).get_global_name(),
 			(BVN_Chapter as Script).get_global_name()
@@ -159,33 +159,33 @@ func _get_configuration_warnings() -> PackedStringArray:
 var has_started := false
 func start_visual_novel():
 	has_started = true
-	var scene:BVN_Page = null
+	var page:BVN_Page = null
 	#region FROM LOAD REQUEST
-	if managed_node_service.scene_context:
-		scene = managed_node_service.scene_context.scene
+	if managed_node_service.page_context:
+		page = managed_node_service.page_context.page
 	#endregion
 		
 	#region NO STARTING
-	elif managed_node_service.scenes:
-		scene = BdbSelect.item_by_type(managed_node_service.scenes, BVN_Page)
+	elif managed_node_service:
+		page = BdbSelect.item_by_type(managed_node_service.pages, BVN_Page)
 	#endregion
-	assert(scene, "Couldn't find a scene to use")
-	run_scene(scene)
+	assert(page, "Couldn't find a page to use")
+	run_page(page)
 
 ## Context of the current running scene
 var context:BVNInternal_SceneExecutionContext
-func run_scene(scene:BVN_Page):
-	context = managed_node_service.mk_scene_context()
+func run_page(page:BVN_Page):
+	context = managed_node_service.mk_page_context()
 	
-	var script := scene.page_data.scene_script
-	assert(script, "'%s' has no script. Start writing one now" % scene.get_scene_path())
-	var root_node := script_parser.parse_bvn_script(scene.page_data.scene_script)
+	var script := page.page_data.scene_script
+	assert(script, "'%s' has no script. Start writing one now" % page.get_page_path())
+	var root_node := script_parser.parse_bvn_script(script)
 	
 	context.node_data = {}
-	context.scene = scene
+	context.page = page
 	context.current_node = root_node
 	
-	managed_node_service.push_scene(scene)
+	managed_node_service.push_page(page)
 	next()
 
 func next(next_node:Bvn_AstNode = null):
@@ -198,13 +198,13 @@ func next(next_node:Bvn_AstNode = null):
 	var prev_node := context.current_node # Just storing for debugging reasons
 	context.current_node = next_node if next_node else context.current_node.get_next_node()
 	if context.current_node == null:
-		var next_scene = BVN_EngineSelectors.find_next_page(context.scene)
+		var next_scene = BVN_EngineSelectors.find_next_page(context.page)
 		assert(next_scene, "No more scenes left!")
-		run_scene(next_scene)
+		run_page(next_scene)
 		return
 
 	var vars = BVNInternal_Query.variables.get_format_payload()
-	vars[&".scene_path"] = context.scene.get_scene_path()
+	vars[&".page_path"] = context.page.get_page_path()
 	execute_bvn_instruction(context.current_node, vars)
 	
 var script_parser:BVN_ScriptParser = BVN_ScriptParser.new()
@@ -229,13 +229,14 @@ func execute_bvn_instruction(ast_node:Bvn_AstNode, vars:Dictionary = {}):
 			nodes_to_run.append_array(ast_node.children)
 			
 			for node_to_run in nodes_to_run:
-				var result: = cmd_runner.execute_node(node_to_run, vars, context.scene if context else null)
+				var result: = cmd_runner.execute_node(node_to_run, vars, context.page if context else null)
 				assert(result[0] == OK, "There was an error running the command '%s'" % node_to_run.text)
 
 			if is_run_in_game:
 				next(ast_node.get_next_node(false))
+				
 		AST_TYPE_IF:
-			var collapse_result := cmd_runner.execute_ifelse_node(ast_node, vars, context.scene)
+			var collapse_result := cmd_runner.execute_ifelse_node(ast_node, vars, context.page)
 				
 			if is_run_in_game:
 				if collapse_result:
@@ -248,6 +249,7 @@ func execute_bvn_instruction(ast_node:Bvn_AstNode, vars:Dictionary = {}):
 						next(next_sibling)
 					else:
 						next(ast_node.get_next_node())
+						
 		AST_TYPE_ELSE_IF:
 			if is_run_in_game:
 				
@@ -257,7 +259,7 @@ func execute_bvn_instruction(ast_node:Bvn_AstNode, vars:Dictionary = {}):
 				var previous_sibling_result:IF_ELSE_STATE = context.node_data[prev_sibling].result
 				if previous_sibling_result == IF_ELSE_STATE.FAILED:
 					# only run node if prev is failed
-					var collapse_result := cmd_runner.execute_ifelse_node(ast_node, vars, context.scene)
+					var collapse_result := cmd_runner.execute_ifelse_node(ast_node, vars, context.page)
 					if collapse_result:
 						context.node_data[ast_node] = {&"result":IF_ELSE_STATE.PASSED}
 						next(ast_node.get_next_node())

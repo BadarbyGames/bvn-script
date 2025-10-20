@@ -13,7 +13,7 @@ AST_TYPE_COMMAND:
 			nodes_to_run.append_array(ast_node.children)
 			
 			for node_to_run in nodes_to_run:
-				var result: = cmd_runner.execute_node(node_to_run, vars, context.scene if context else null)
+				var result: = cmd_runner.execute_node(node_to_run, vars, context if context else null)
 				assert(result[0] == OK, "There was an error running the command '%s'" % node_to_run.text)
 
 			if is_run_in_game:

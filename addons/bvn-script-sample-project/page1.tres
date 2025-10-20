@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BVN_PageData" load_steps=2 format=3 uid="uid://cokojxg2ly85v"]
+
+[ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="1_jwk30"]
+
+[resource]
+script = ExtResource("1_jwk30")
+scene_script = "> %GUI.show()
+> audio.play(\"guitar.ogg\")
+Bivian:
+	Hi there! My Name is Bivian.
+	I'm so [shake rate=20.0 level=5 connected=1]excited[/shake] to have you here!"

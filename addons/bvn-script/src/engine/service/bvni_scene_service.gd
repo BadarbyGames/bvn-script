@@ -3,14 +3,14 @@ extends Node
 
 class_name BVNInernal_ManagedNodeService
 
-var scenes:Array[Node]:
+var pages:Array[Node]:
 	get:
-		var scenes:Array[Node]= []
-		for scene in get_tree().get_nodes_in_group(BVNInternal_Tags.NODE_MANAGED):
-			if scene.has_signal("visibility_changed"):
-				scenes.append(scene)
-		return scenes
-var scene_context:BVNInternal_SceneExecutionContext
+		var pages:Array[Node]= []
+		for page in get_tree().get_nodes_in_group(BVNInternal_Tags.NODE_MANAGED):
+			if page.has_signal("visibility_changed"):
+				pages.append(page)
+		return pages
+var page_context:BVNInternal_SceneExecutionContext
 
 func _enter_tree() -> void:
 	BVN_EventBus.on_engine_demand_save.connect(_on_engine_demand_save)
@@ -27,56 +27,56 @@ func _on_request_activate_scene(dict:Dictionary):
 		toggle_scene(dict.node)
 	
 func _on_engine_demand_save(save_data:Dictionary):
-	save_data.scene = {
-		"scene_path": scene_context.scene.get_scene_path()
+	save_data.page = {
+		"page_path": page_context.page.get_page_path()
 	}
 func _on_engine_demand_load(save_data:Dictionary):
-	if not scenes:
-		printerr("No scenes found")
+	if not pages:
+		printerr("No pages found")
 		return
 				
-	var scene_path:String = save_data.get("scene", {}).get("scene_path")	
-	if scene_path:
-		scene_context.scene = find_by_scene_path(scene_path)
-		if not scene_context.scene:
-			printerr("Unable to load saved scene(%s)" % scene_path)
-	if not scene_context.scene:
-		scene_context.scene = scenes[0]
+	var page_path:String = save_data.get("page", {}).get("page_path")	
+	if page_path:
+		page_context.page = find_by_page_path(page_path)
+		if not page_context.page:
+			printerr("Unable to load saved page(%s)" % page_path)
+	if not page_context.page:
+		page_context.page = pages[0]
 	
-func mk_scene_context() -> BVNInternal_SceneExecutionContext:
-	scene_context = BVNInternal_SceneExecutionContext.new()
-	return scene_context
+func mk_page_context() -> BVNInternal_SceneExecutionContext:
+	page_context = BVNInternal_SceneExecutionContext.new()
+	return page_context
 
-func find_by_scene_path(scene_path:String):
-	for scene:BVN_Page in scenes:
-		if scene.get_scene_path() == scene_path: return scene
+func find_by_page_path(page_path:String):
+	for page:BVN_Page in pages:
+		if page.get_page_path() == page_path: return page
 		
-var scene_history:Array[Node] = []
-func toggle_scene(scene_or_node:Node):
+var page_history:Array[Node] = []
+func toggle_scene(page_or_node:Node):
 	var visited := {}
 	var hidden_node_names :Array[String] = []
 	
-	_toggle_scene(scene_or_node, true)
-	visited[scene_or_node] = true
+	_toggle_page(page_or_node, true)
+	visited[page_or_node] = true
 	
-	for scene_source in [scenes,scene_history]:
-		for other_scene in scene_source:
-			if visited.has(other_scene): continue
-			visited[other_scene] = true
+	for scene_source in [pages,page_history]:
+		for other_page in scene_source:
+			if visited.has(other_page): continue
+			visited[other_page] = true
 			
-			if other_scene.visible != false:
-				_toggle_scene(other_scene, false)
+			if other_page.visible != false:
+				_toggle_page(other_page, false)
 				
 				 # hidden_node_names is only used in the editor
 				if Engine.is_editor_hint():
-					hidden_node_names.append(other_scene.name)
+					hidden_node_names.append(other_page.name)
 
 	if Engine.is_editor_hint(): 
-		BVNInternal_Notif.toast("'%s' activated" % scene_or_node.name)
+		BVNInternal_Notif.toast("'%s' activated" % page_or_node.name)
 		if hidden_node_names:
 			BVNInternal_Notif.toast("'%s' is hidden" % ",".join(hidden_node_names))
 			
-func _toggle_scene(node:Node, is_visible:bool):
+func _toggle_page(node:Node, is_visible:bool):
 	node.set_process(is_visible)
 	node.set_physics_process(is_visible)
 	node.visible = is_visible
@@ -85,12 +85,12 @@ func _toggle_scene(node:Node, is_visible:bool):
 	for canvas_layer:CanvasLayer in BdbSelect.children_by_type_recursive(node, CanvasLayer):
 		canvas_layer.visible = is_visible
 
-func push_scene(scene_or_node:Node):
-	scene_history.append(scene_or_node)
-	toggle_scene(scene_or_node)
+func push_page(page_or_node:Node):
+	page_history.append(page_or_node)
+	toggle_scene(page_or_node)
 
-func pop_scene():
-	var scene_or_node:Node = scene_history.pop_front()
-	toggle_scene(scene_or_node)
+func pop_page():
+	var page_or_node:Node = page_history.pop_front()
+	toggle_scene(page_or_node)
 
 		

@@ -18,7 +18,7 @@ func _setup(): pass
 func setup():
 	if !page_data: 
 		page_data = BVN_PageData.new()
-		assert(chapter, "Needs to be a child of either the engine or a scene set")
+		assert(chapter, "Needs to be a child of either the BVN_Engine or a BVN_Chapter")
 	add_to_group(BVNInternal_Tags.NODE_MANAGED)
 	add_to_group(BVNInternal_Tags.NODE_PAGE)
 	_setup()
@@ -32,5 +32,5 @@ func _get_configuration_warnings() -> PackedStringArray:
 		errs.append(["No scene data set. Please set one"])
 	return errs
 
-func get_scene_path():
-	return str(chapter.get_scene_path(), " / ", name)
+func get_page_path():
+	return str(chapter.get_page_path(), " / ", name)

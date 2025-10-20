@@ -40,9 +40,9 @@ func add_bvn_engine_autofree() -> Dictionary:
 	components.variables = BVN_Variables.new()
 	components.engine.add_child(components.variables)
 	
-	components.scene = BVN_Page.new()
-	components.scene.page_data = BVN_PageData.new()
-	components.engine.add_child(components.scene)
+	components.page = BVN_Page.new()
+	components.page_data = BVN_PageData.new()
+	components.engine.add_child(components.page)
 	return components
 var packed_scene :PackedScene = load("res://addons/bvn-script/editor_tab/bvn_editor_tab.tscn")
 func add_editor_tab_autofree() -> Dictionary:

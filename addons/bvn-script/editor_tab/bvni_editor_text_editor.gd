@@ -64,7 +64,7 @@ func execute_line(line_index:int):
 					set_line_as_executing(line, true)
 				var engine := BVNInternal_Query.engine
 				var vars = BVNInternal_Query.variables.get_format_payload()
-				vars[&".scene_path"] = edited_scene.get_scene_path()
+				vars[&".page_path"] = edited_scene.get_page_path()
 				
 				## Warn user that the engine is locked
 				if engine.lock_service.is_locked:

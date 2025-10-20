@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="BVN_PageData" load_steps=2 format=3 uid="uid://d34qjga4medvg"]
+
+[ext_resource type="Script" uid="uid://blhubqutdf6yh" path="res://addons/bvn-script/models/bvn_scene_data.gd" id="1_o0i71"]
+
+[resource]
+script = ExtResource("1_o0i71")

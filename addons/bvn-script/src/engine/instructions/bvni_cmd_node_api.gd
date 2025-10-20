@@ -9,7 +9,7 @@ func get_node_from_context(str:String):
 	
 func hide_scenes():
 	var engine:BVN_Engine = get_tree().get_first_node_in_group(BVNInternal_Tags.ENGINE)
-	engine.managed_node_service.push_scene(null)
+	engine.managed_node_service.push_page(null)
 	
 
 func solo(node: Node, cb_func:String = &""):
@@ -21,7 +21,7 @@ func solo(node: Node, cb_func:String = &""):
 		printerr("Unable to get lock. Already locked")
 		return
 	
-	engine.managed_node_service.push_scene(node)
+	engine.managed_node_service.push_page(node)
 	if cb_func:
 		assert(node.has_method(cb_func), "'%s' does not have a function named '%s'" % [node.name, cb_func])
 		Callable(node,cb_func).call()
@@ -37,7 +37,7 @@ func watch_none_scene_node(node:Node):
 		node.tree_exited.disconnect(watch_none_scene_node)
 		
 	var engine:BVN_Engine = get_tree().get_first_node_in_group(BVNInternal_Tags.ENGINE)
-	engine.managed_node_service.pop_scene()
+	engine.managed_node_service.pop_page()
 	engine.lock_service.unlock_engine({"source":node})
 	engine.next()
 	
