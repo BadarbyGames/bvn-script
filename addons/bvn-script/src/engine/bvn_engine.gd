@@ -31,6 +31,7 @@ var character_cache:Dictionary[String, BVN_CharacterSheet] = {}
 var bdb := BdbThrottleByMsec.new(250)
 
 
+
 #region services
 var cmd_runner:BVNInternal_EngineCommandRunner
 var speaker_runner:BVNInternal_SpeakerRunner
@@ -196,11 +197,26 @@ func next(next_node:Bvn_AstNode = null):
 		return
 	
 	var prev_node := context.current_node # Just storing for debugging reasons
-	context.current_node = next_node if next_node else context.current_node.get_next_node()
-	if context.current_node == null:
-		var next_scene = BVN_EngineSelectors.find_next_page(context.page)
-		assert(next_scene, "No more scenes left!")
-		run_page(next_scene)
+	
+	# Attempt 1: Override next AST node to execute
+	# Attempt 2: Get last AST's sibling
+	if next_node == null and context.current_node: # Has Override
+		var tmp := context.current_node.get_next_node()
+		if tmp:
+			next_node = context.current_node.get_next_node()
+	context.current_node = next_node
+	# Attempt 3: If nothing found, then we've exhausted all the commands
+	# and we move on to the next page.
+	if next_node == null: # 
+		var next_page = BdbSelect.next_sibling_by_type(context.page, BVN_Page)
+		if next_page:
+			run_page(next_page)
+		else:
+			printerr(
+			"You are at the end of the Chapter. Specify a transition action e.g.:" +
+			'\n\t > goto.next_chapter()' +
+			'\n\t > goto.chapter("Chapter 1 / Page 932")' +
+			'\n\t > %"Page12".show()')
 		return
 
 	var vars = BVNInternal_Query.variables.get_format_payload()
