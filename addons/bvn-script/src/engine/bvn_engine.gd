@@ -192,7 +192,7 @@ func run_page(page:BVN_Page):
 func next(next_node:Bvn_AstNode = null):
 	if (
 		lock_service.is_locked or 
-		(!Engine.is_editor_hint() and !has_started)
+		(!BVNInternal.is_editor_mode and !has_started)
 	): 
 		return
 	

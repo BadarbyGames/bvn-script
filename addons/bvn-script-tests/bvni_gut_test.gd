@@ -38,10 +38,19 @@ func add_bvn_engine_autofree() -> Dictionary:
 	engine.settings.data_folder = "res://addons/bvn-script-tests/assets"
 	
 	components.variables = BVN_Variables.new()
+	components.variables.name = "add_bvn_engine_autofree - BVN_Variables"
 	components.engine.add_child(components.variables)
 	
-	components.page = BVN_Page.new()
-	components.page_data = BVN_PageData.new()
+	
+	var page_data := BVN_PageData.new()
+	page_data.scene_script = "#"
+	
+	var page := BVN_Page.new()
+	page.name == "add_bvn_engine_autofree - page"
+	page.page_data = page_data
+	
+	components.page_data = page_data
+	components.page = page
 	components.engine.add_child(components.page)
 	return components
 var packed_scene :PackedScene = load("res://addons/bvn-script/editor_tab/bvn_editor_tab.tscn")

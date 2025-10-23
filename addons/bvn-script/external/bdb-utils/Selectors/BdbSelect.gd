@@ -19,7 +19,7 @@ static func next_sibling_by_type(node:Node, type):
 		
 		# If the wrong type, then move to next sibling
 		if type and not(is_instance_of(sibling, type)):
-			next_sibling_by_type(sibling, type)
+			return next_sibling_by_type(sibling, type)
 		return sibling
 	return null
 
